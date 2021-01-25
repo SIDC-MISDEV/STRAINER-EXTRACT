@@ -9,5 +9,38 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Server=localhost;Database=_pallocan;Username=root;Password=supervisor;</Value>
     </Setting>
+    <Setting Name="FOLDERS" Type="System.String" Scope="User">
+      <Value Profile="(Default)">AR,GI,GR,IP,PR,RC,RG,RV</Value>
+    </Setting>
+    <Setting Name="FOR_SYNC_FOLDER" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Projecterp\Pallocan\</Value>
+    </Setting>
+    <Setting Name="TEMP_FOLDER" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\TempPath\</Value>
+    </Setting>
+    <Setting Name="DROPSITE_FOLDER" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\TestPath\</Value>
+    </Setting>
+    <Setting Name="AR_STORED_PROC" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ARStored_1,ARStored_2,ARStored_3,ARStored_4</Value>
+    </Setting>
+    <Setting Name="GI_STORED_PROC" Type="System.String" Scope="User">
+      <Value Profile="(Default)">GIStored_1,GIStored_2,GIStored_3,GIStored_4</Value>
+    </Setting>
+    <Setting Name="GR_STORED_PROC" Type="System.String" Scope="User">
+      <Value Profile="(Default)">GRStored_1,GRStored_2,GRStored_3,GRStored_4</Value>
+    </Setting>
+    <Setting Name="PR_STORED_PROC" Type="System.String" Scope="User">
+      <Value Profile="(Default)">PRStored_1, PRStored_2</Value>
+    </Setting>
+    <Setting Name="RC_STORED_PROC" Type="System.String" Scope="User">
+      <Value Profile="(Default)">RCStored_1,RCStored_2,RCStored_3,RCStored_4</Value>
+    </Setting>
+    <Setting Name="RG_STORED_PROC" Type="System.String" Scope="User">
+      <Value Profile="(Default)">RGStored_1,RGStored_2,RGStored_3,RGStored_4</Value>
+    </Setting>
+    <Setting Name="RV_STORED_PROC" Type="System.String" Scope="User">
+      <Value Profile="(Default)">RVStored_1,RVStored_2,RVStored_3,RVStored_4</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

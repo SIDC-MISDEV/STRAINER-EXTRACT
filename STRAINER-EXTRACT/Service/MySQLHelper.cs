@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System.Data;
+using STRAINER_EXTRACT.Model;
 
 namespace STRAINER_EXTRACT.Service
 {
@@ -54,7 +55,42 @@ namespace STRAINER_EXTRACT.Service
             }
         }
 
+        public List<Prefix> GetPrefixData()
+        {
+            try
+            {
+                var result = new List<Prefix>();
 
+                using (conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    query = @"SELECT objectType, prefix FROM serial ORDER BY idserial ASC;";
+
+                    using (cmd = new MySqlCommand(query, conn))
+                    {
+                        using (var dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                result.Add(new Prefix
+                                {
+                                    ObjectType = dr["objectType"].ToString(),
+                                    ObjectPrefix = dr["prefix"].ToString()
+                                });
+                            }
+                        }
+                    }
+                }
+
+                return result;
+            }
+            catch
+            {
+
+                throw;
+            }
+        }
     
     }
 

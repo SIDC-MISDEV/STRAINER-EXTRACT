@@ -32,5 +32,137 @@ namespace STRAINER_EXTRACT.Properties {
                 return ((string)(this["DB"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("AR,GI,GR,IP,PR,RC,RG,RV")]
+        public string FOLDERS {
+            get {
+                return ((string)(this["FOLDERS"]));
+            }
+            set {
+                this["FOLDERS"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Projecterp\\Pallocan\\")]
+        public string FOR_SYNC_FOLDER {
+            get {
+                return ((string)(this["FOR_SYNC_FOLDER"]));
+            }
+            set {
+                this["FOR_SYNC_FOLDER"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\TempPath\\")]
+        public string TEMP_FOLDER {
+            get {
+                return ((string)(this["TEMP_FOLDER"]));
+            }
+            set {
+                this["TEMP_FOLDER"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\TestPath\\")]
+        public string DROPSITE_FOLDER {
+            get {
+                return ((string)(this["DROPSITE_FOLDER"]));
+            }
+            set {
+                this["DROPSITE_FOLDER"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ARStored_1,ARStored_2,ARStored_3,ARStored_4")]
+        public string AR_STORED_PROC {
+            get {
+                return ((string)(this["AR_STORED_PROC"]));
+            }
+            set {
+                this["AR_STORED_PROC"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("GIStored_1,GIStored_2,GIStored_3,GIStored_4")]
+        public string GI_STORED_PROC {
+            get {
+                return ((string)(this["GI_STORED_PROC"]));
+            }
+            set {
+                this["GI_STORED_PROC"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("GRStored_1,GRStored_2,GRStored_3,GRStored_4")]
+        public string GR_STORED_PROC {
+            get {
+                return ((string)(this["GR_STORED_PROC"]));
+            }
+            set {
+                this["GR_STORED_PROC"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("PRStored_1, PRStored_2")]
+        public string PR_STORED_PROC {
+            get {
+                return ((string)(this["PR_STORED_PROC"]));
+            }
+            set {
+                this["PR_STORED_PROC"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("RCStored_1,RCStored_2,RCStored_3,RCStored_4")]
+        public string RC_STORED_PROC {
+            get {
+                return ((string)(this["RC_STORED_PROC"]));
+            }
+            set {
+                this["RC_STORED_PROC"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("RGStored_1,RGStored_2,RGStored_3,RGStored_4")]
+        public string RG_STORED_PROC {
+            get {
+                return ((string)(this["RG_STORED_PROC"]));
+            }
+            set {
+                this["RG_STORED_PROC"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("RVStored_1,RVStored_2,RVStored_3,RVStored_4")]
+        public string RV_STORED_PROC {
+            get {
+                return ((string)(this["RV_STORED_PROC"]));
+            }
+            set {
+                this["RV_STORED_PROC"] = value;
+            }
+        }
     }
 }
