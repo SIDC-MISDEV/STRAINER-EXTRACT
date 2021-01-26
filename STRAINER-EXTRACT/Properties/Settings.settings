@@ -42,5 +42,8 @@
     <Setting Name="RV_STORED_PROC" Type="System.String" Scope="User">
       <Value Profile="(Default)">RVStored_1,RVStored_2,RVStored_3,RVStored_4</Value>
     </Setting>
+    <Setting Name="IP_STORED_PROC" Type="System.String" Scope="User">
+      <Value Profile="(Default)">IPStored_1,IPStored_2,IPStored_3,IPStored_4,IPStored_5</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

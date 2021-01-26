@@ -164,5 +164,17 @@ namespace STRAINER_EXTRACT.Properties {
                 this["RV_STORED_PROC"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("IPStored_1,IPStored_2,IPStored_3,IPStored_4,IPStored_5")]
+        public string IP_STORED_PROC {
+            get {
+                return ((string)(this["IP_STORED_PROC"]));
+            }
+            set {
+                this["IP_STORED_PROC"] = value;
+            }
+        }
     }
 }

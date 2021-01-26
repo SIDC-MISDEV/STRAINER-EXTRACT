@@ -41,6 +41,7 @@ namespace STRAINER_EXTRACT.Service
 
                         //parameters
                         //cmd.Parameters.AddWithValue("@SpName", view.EmployeeId);
+                        cmd.CommandTimeout = 0;
 
                         cmd.ExecuteNonQuery();
                     }

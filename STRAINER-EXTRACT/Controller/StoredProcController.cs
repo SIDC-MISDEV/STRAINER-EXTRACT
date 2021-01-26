@@ -34,7 +34,8 @@ namespace STRAINER_EXTRACT.Controller
             { "PR", Properties.Settings.Default.PR_STORED_PROC.Split(',') },
             { "RC", Properties.Settings.Default.RC_STORED_PROC.Split(',') },
             { "RG", Properties.Settings.Default.RG_STORED_PROC.Split(',') },
-            { "RV", Properties.Settings.Default.RV_STORED_PROC.Split(',') }
+            { "RV", Properties.Settings.Default.RV_STORED_PROC.Split(',') },
+            { "IP", Properties.Settings.Default.IP_STORED_PROC.Split(',') }
         };
 
         public static List<string> FolderPath = new List<string>();
@@ -89,7 +90,7 @@ namespace STRAINER_EXTRACT.Controller
 
 
 
-        public void GetZip(Label lbl = null)
+        public void GetZip()
         {
             
             string tempPath = @"C:\TempPath\";
@@ -246,16 +247,55 @@ namespace STRAINER_EXTRACT.Controller
 
                     string[] scripts = storedProcedures[parameter[0]];
 
-                    foreach (var _query in scripts)
+                    if(item == "IP_SI")
                     {
-                        db = new MySQLHelper();
+                        for (int i = 0; i <= scripts.Length - 1; i++)
+                        {
+                            string querys = string.Empty;
 
-                        string queryString = $"CALL {_query}('{parameter[1]}', '{date}');";
+                            if (i == 4)
+                                break;
+                            else
+                                querys = $"CALL IPStored_{i + 1}('{date}')";
 
-                        db.GetExtract(queryString);
+
+                            db = new MySQLHelper();
+                            db.GetExtract(querys);
+                        }
+
+                        GetZip();
                     }
+                    else if(item == "IP_OR")
+                    {
+                        for (int i = 0; i <= scripts.Length - 1; i++)
+                        {
+                            string querys = string.Empty;
 
-                    GetZip();
+                            if (i == 4)
+                            {
+                                querys = $"CALL IPStored_{i + 1}('{date}')";
+                                db = new MySQLHelper();
+                                db.GetExtract(querys);
+                            }                         
+                        }
+
+                        GetZip();
+                    }
+                    else
+                    {
+                        foreach (var _query in scripts)
+                        {
+                            string queryString = string.Empty;
+                            db = new MySQLHelper();
+
+                            queryString = $"CALL {_query}('{parameter[1]}', '{date}');";
+
+                            db.GetExtract(queryString);
+                        }
+
+                        GetZip();
+                    }
+                    
 
                 }
 
