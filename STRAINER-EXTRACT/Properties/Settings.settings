@@ -45,5 +45,11 @@
     <Setting Name="IP_STORED_PROC" Type="System.String" Scope="User">
       <Value Profile="(Default)">IPStored_1,IPStored_2,IPStored_3,IPStored_4,IPStored_5</Value>
     </Setting>
+    <Setting Name="BRANCH_CODE" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SIDC-1-2-1-1</Value>
+    </Setting>
+    <Setting Name="WAREHOUSE" Type="System.String" Scope="User">
+      <Value Profile="(Default)">WHC0003</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

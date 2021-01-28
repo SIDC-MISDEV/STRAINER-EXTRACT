@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ionic.Zip">
-      <HintPath>..\..\SOFOS2 Files\Ionic.Zip.dll</HintPath>
+      <HintPath>D:\Cardo\SAP Integration File\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=6.4.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

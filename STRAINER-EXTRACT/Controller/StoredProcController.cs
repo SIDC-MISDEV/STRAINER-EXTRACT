@@ -256,7 +256,7 @@ namespace STRAINER_EXTRACT.Controller
                             if (i == 4)
                                 break;
                             else
-                                querys = $"CALL IPStored_{i + 1}('{date}')";
+                                querys = $"CALL IPStored_{i + 1}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}')";
 
 
                             db = new MySQLHelper();
@@ -273,7 +273,7 @@ namespace STRAINER_EXTRACT.Controller
 
                             if (i == 4)
                             {
-                                querys = $"CALL IPStored_{i + 1}('{date}')";
+                                querys = $"CALL IPStored_{i + 1}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}')";
                                 db = new MySQLHelper();
                                 db.GetExtract(querys);
                             }                         
@@ -288,7 +288,7 @@ namespace STRAINER_EXTRACT.Controller
                             string queryString = string.Empty;
                             db = new MySQLHelper();
 
-                            queryString = $"CALL {_query}('{parameter[1]}', '{date}');";
+                            queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
 
                             db.GetExtract(queryString);
                         }

@@ -176,5 +176,29 @@ namespace STRAINER_EXTRACT.Properties {
                 this["IP_STORED_PROC"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("SIDC-1-2-1-1")]
+        public string BRANCH_CODE {
+            get {
+                return ((string)(this["BRANCH_CODE"]));
+            }
+            set {
+                this["BRANCH_CODE"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("WHC0003")]
+        public string WAREHOUSE {
+            get {
+                return ((string)(this["WAREHOUSE"]));
+            }
+            set {
+                this["WAREHOUSE"] = value;
+            }
+        }
     }
 }
