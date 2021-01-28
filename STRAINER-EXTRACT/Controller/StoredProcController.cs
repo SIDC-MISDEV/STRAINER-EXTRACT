@@ -23,6 +23,8 @@ namespace STRAINER_EXTRACT.Controller
         private string syncFolders = Properties.Settings.Default.FOR_SYNC_FOLDER;
         private string dropSitePath = Properties.Settings.Default.DROPSITE_FOLDER;
 
+        frmMain frm;
+
         private string zipPassword = "m1s@dm1n";
         private string compressedFileName = string.Empty;
 
@@ -41,9 +43,9 @@ namespace STRAINER_EXTRACT.Controller
         public static List<string> FolderPath = new List<string>();
 
 
-        public StoredProcController()
+        public StoredProcController(frmMain _frm)
         {
-
+            frm = _frm;
         }
 
         public void InitializeFolders()
@@ -72,8 +74,6 @@ namespace STRAINER_EXTRACT.Controller
 
         public void ClearFile()
         {
-            string dropSitePath = @"C:\TestPath\";
-
 
             foreach (var checkfolders in Directory.GetDirectories(dropSitePath))
             {
@@ -88,14 +88,26 @@ namespace STRAINER_EXTRACT.Controller
             }
         }
 
+        public void ClearFile(string path)
+        {
+            foreach (var checkfolders in Directory.GetDirectories(path))
+            {
+                var checkdropSiteSubFolderFiles = Directory.GetFiles(checkfolders);
+
+                foreach (var checknameFile in checkdropSiteSubFolderFiles)
+                {
+                    File.Delete(checknameFile);
+                }
+            }
+        }
+
 
 
         public void GetZip()
         {
             
-            string tempPath = @"C:\TempPath\";
+            //string tempPath = @"C:\TempPath\";
             string tempFullPath = string.Empty;
-
 
             foreach (var folders in Directory.GetDirectories(dropSitePath))
             {
@@ -213,6 +225,8 @@ namespace STRAINER_EXTRACT.Controller
                 }
             }
 
+            
+
         }
 
         public List<Prefix> GetPrefixes()
@@ -235,19 +249,39 @@ namespace STRAINER_EXTRACT.Controller
             }
         }
 
+        public Branch GetBranchName()
+        {
+            try
+            {
+                db = new MySQLHelper();
+
+                return db.GetBranchName();
+            }
+            catch
+            {
+
+                throw;
+            }
+        }
+
         public void Extract(List<string> query, string date)
         {
 
             try
             {
-               
+                int maxVal = 28;
+                int val = 0;
+
+
+
                 foreach (var item in query)
                 {
+
                     var parameter = item.Split('_');
 
                     string[] scripts = storedProcedures[parameter[0]];
 
-                    if(item == "IP_SI")
+                    if (item == "IP_SI")
                     {
                         for (int i = 0; i <= scripts.Length - 1; i++)
                         {
@@ -261,11 +295,16 @@ namespace STRAINER_EXTRACT.Controller
 
                             db = new MySQLHelper();
                             db.GetExtract(querys);
+
+                            val++;
+                            ThreadHelper.SetValue(frm, frm.progressBar1, val, maxVal);
                         }
+
+
 
                         GetZip();
                     }
-                    else if(item == "IP_OR")
+                    else if (item == "IP_OR")
                     {
                         for (int i = 0; i <= scripts.Length - 1; i++)
                         {
@@ -276,8 +315,15 @@ namespace STRAINER_EXTRACT.Controller
                                 querys = $"CALL IPStored_{i + 1}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}')";
                                 db = new MySQLHelper();
                                 db.GetExtract(querys);
-                            }                         
+
+                                val++;
+                                ThreadHelper.SetValue(frm, frm.progressBar1, val, maxVal);
+                            }
+
+
                         }
+
+
 
                         GetZip();
                     }
@@ -291,15 +337,19 @@ namespace STRAINER_EXTRACT.Controller
                             queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
 
                             db.GetExtract(queryString);
+
+                            val++;
+                            ThreadHelper.SetValue(frm, frm.progressBar1, val, maxVal);
                         }
+
+
 
                         GetZip();
                     }
-                    
 
                 }
 
-                
+                ThreadHelper.SetValue(frm, frm.progressBar1, maxVal, maxVal);
 
             }
             catch 

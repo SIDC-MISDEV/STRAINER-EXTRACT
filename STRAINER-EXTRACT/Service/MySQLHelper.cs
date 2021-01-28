@@ -14,11 +14,10 @@ namespace STRAINER_EXTRACT.Service
 
         private MySqlConnection conn;
         private MySqlCommand cmd;
-        
-        
-
-
+       
         private string connectionString = Properties.Settings.Default.DB;
+        private string branchName = Properties.Settings.Default.BRANCH_CODE;
+        private string warehouseCode = Properties.Settings.Default.WAREHOUSE;
         private string query = string.Empty;
 
         public void GetExtract(string _query)
@@ -48,6 +47,43 @@ namespace STRAINER_EXTRACT.Service
 
                 }
 
+            }
+            catch
+            {
+
+                throw;
+            }
+        }
+
+        public Branch GetBranchName()
+        {
+            try
+            {
+                var branch = new Branch();
+
+                using (conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    query = "SELECT branchName, whse FROM business_segments WHERE branchCode = @branch AND whse = @whc";
+
+                    using (cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@branch", branchName);
+                        cmd.Parameters.AddWithValue("@whc", warehouseCode);
+
+                        using (var dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                branch.BranchName = dr["branchName"].ToString();
+                                branch.WarehouseCode = dr["whse"].ToString();
+                            }
+                        }
+                    }
+                }
+
+                return branch;
             }
             catch
             {

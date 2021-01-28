@@ -17,10 +17,14 @@ namespace STRAINER_EXTRACT
     {
         StoredProcController controller = null;
 
+        private delegate void SetButtonState(bool enabled);
+        BackgroundWorker bg = new BackgroundWorker();
+
+
         public frmMain()
         {
             InitializeComponent();
-            controller = new StoredProcController();
+            controller = new StoredProcController(this);
 
             this.Text = Application.ProductName;
 
@@ -58,8 +62,11 @@ namespace STRAINER_EXTRACT
                 var folders = Properties.Settings.Default.FOLDERS.Split(',');
                 var prefix = new List<Prefix>();
 
-
+                //check all folders are exist
                 controller.InitializeFolders();
+
+                //clear all unecessary files
+                controller.ClearFile(Properties.Settings.Default.TEMP_FOLDER);
 
                 prefix = controller.GetPrefixes();
 
@@ -143,13 +150,21 @@ namespace STRAINER_EXTRACT
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
+            treeView1.Enabled = false;
+
+            var thread = new Thread(StartGeneration);
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private void StartGeneration()
+        {
             try
             {
                 var forGenerate = new List<string>();
 
-                btnGenerate.Enabled = false;
-
-                ThreadHelper.SetButtonEnable(this, btnGenerate, false);
+                ThreadHelper.SetControlState(this, btnGenerate, false);
+                ThreadHelper.SetControlState(this, treeView1, false);
 
                 foreach (TreeNode rootNote in treeView1.Nodes)
                 {
@@ -167,16 +182,21 @@ namespace STRAINER_EXTRACT
 
                 controller.ClearFile();
 
-                controller.Extract(forGenerate, dtDate.Value.ToString("yyyy-MM-dd"));
-            }
-            catch (Exception er)
-            {
 
-                MessageBox.Show(er.Message);
+                controller.Extract(forGenerate, dtDate.Value.ToString("yyyy-MM-dd"));
+
+                MessageBox.Show("Generation completed!", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch(Exception er)
+            {
+                MessageBox.Show(er.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
-                btnGenerate.Enabled = true;
+                ThreadHelper.SetControlState(this, btnGenerate, true);
+                ThreadHelper.SetValue(this, progressBar1, 0, 0);
+                ThreadHelper.SetControlState(this, treeView1, true);
+
             }
         }
 
@@ -184,7 +204,16 @@ namespace STRAINER_EXTRACT
         {
             try
             {
+                var details = controller.GetBranchName();
+
+                if (!string.IsNullOrEmpty(details.BranchName))
+                {
+                    txtBranchName.Text = details.BranchName;
+                    txtWarehouseCode.Text = details.WarehouseCode;
+                }
+
                 Initialize();
+               
             }
             catch (Exception er)
             {

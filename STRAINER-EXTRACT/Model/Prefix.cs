@@ -11,4 +11,10 @@ namespace STRAINER_EXTRACT.Model
         public string ObjectType { get; set; }
         public string ObjectPrefix { get; set; }
     }
+
+    public class Branch
+    {
+        public string BranchName { get; set; }
+        public string WarehouseCode { get; set; }
+    }
 }
