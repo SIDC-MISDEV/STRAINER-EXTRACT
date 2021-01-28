@@ -200,5 +200,17 @@ namespace STRAINER_EXTRACT.Properties {
                 this["WAREHOUSE"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("31")]
+        public int MAX_FILE {
+            get {
+                return ((int)(this["MAX_FILE"]));
+            }
+            set {
+                this["MAX_FILE"] = value;
+            }
+        }
     }
 }

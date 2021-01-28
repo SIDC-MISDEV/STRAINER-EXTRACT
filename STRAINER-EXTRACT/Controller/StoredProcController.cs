@@ -269,7 +269,7 @@ namespace STRAINER_EXTRACT.Controller
 
             try
             {
-                int maxVal = 28;
+                int maxVal = Properties.Settings.Default.MAX_FILE;
                 int val = 0;
 
 
