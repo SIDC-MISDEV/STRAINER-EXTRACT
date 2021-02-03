@@ -46,6 +46,7 @@ namespace STRAINER_EXTRACT.Controller
             {
                 SetProgress d = new SetProgress(SetValue);
                 f.Invoke(d, new object[] { f, c, value, maxVal });
+                
             }
             else
             {

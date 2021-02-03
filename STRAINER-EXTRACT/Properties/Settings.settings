@@ -5,15 +5,15 @@
     <Setting Name="DB" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Server=localhost;Database=_pallocan;Username=root;Password=supervisor;&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;Server=localhost;Database=_pinamucan;Username=root;Password=supervisor;&lt;/ConnectionString&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Server=localhost;Database=_pallocan;Username=root;Password=supervisor;</Value>
+      <Value Profile="(Default)">Server=localhost;Database=_pinamucan;Username=root;Password=supervisor;</Value>
     </Setting>
     <Setting Name="FOLDERS" Type="System.String" Scope="User">
-      <Value Profile="(Default)">AR,GI,GR,IP,PR,RC,RG,RV</Value>
+      <Value Profile="(Default)">AR,GI,GR,IP,PR,RC,RG,RV,</Value>
     </Setting>
     <Setting Name="FOR_SYNC_FOLDER" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Projecterp\Pallocan\</Value>
+      <Value Profile="(Default)">C:\Projecterp\Pinamucan\</Value>
     </Setting>
     <Setting Name="TEMP_FOLDER" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\TempPath\</Value>
@@ -22,7 +22,7 @@
       <Value Profile="(Default)">C:\TestPath\</Value>
     </Setting>
     <Setting Name="AR_STORED_PROC" Type="System.String" Scope="User">
-      <Value Profile="(Default)">ARStored_1,ARStored_2,ARStored_3,ARStored_4</Value>
+      <Value Profile="(Default)">ARStored_1,ARStored_2,ARStored_3,ARStored_4,ARStored_5,ARStored_6,ARStored_7,ARStored_8</Value>
     </Setting>
     <Setting Name="GI_STORED_PROC" Type="System.String" Scope="User">
       <Value Profile="(Default)">GIStored_1,GIStored_2,GIStored_3,GIStored_4</Value>
@@ -46,13 +46,13 @@
       <Value Profile="(Default)">IPStored_1,IPStored_2,IPStored_3,IPStored_4,IPStored_5</Value>
     </Setting>
     <Setting Name="BRANCH_CODE" Type="System.String" Scope="User">
-      <Value Profile="(Default)">SIDC-1-2-1-1</Value>
+      <Value Profile="(Default)">SIDC-1-2-1-7</Value>
     </Setting>
     <Setting Name="WAREHOUSE" Type="System.String" Scope="User">
-      <Value Profile="(Default)">WHC0003</Value>
+      <Value Profile="(Default)">WHC0013</Value>
     </Setting>
     <Setting Name="MAX_FILE" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">31</Value>
+      <Value Profile="(Default)">71</Value>
     </Setting>
   </Settings>
 </SettingsFile>

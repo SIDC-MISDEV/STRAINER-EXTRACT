@@ -71,7 +71,7 @@ namespace STRAINER_EXTRACT.Controller
         }
 
         
-
+        //Delete text file in dropsitepath
         public void ClearFile()
         {
 
@@ -87,6 +87,8 @@ namespace STRAINER_EXTRACT.Controller
                 }
             }
         }
+
+        //Delete text file 
 
         public void ClearFile(string path)
         {
@@ -327,12 +329,41 @@ namespace STRAINER_EXTRACT.Controller
 
                         GetZip();
                     }
+                    //else if (item != "AR_SI")
+                    //{
+
+                    //    for (int i = 0; i <= scripts.Length - 1; i++)
+                    //    {
+                    //        string querys = string.Empty;
+
+                    //        if (i == 4)
+                    //            break;
+                    //        else
+                    //            querys = $"CALL ARStored_{i + 1}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+
+
+                    //        db = new MySQLHelper();
+                    //        db.GetExtract(querys);
+
+                    //        val++;
+                    //        ThreadHelper.SetValue(frm, frm.progressBar1, val, maxVal);
+                    //    }
+
+
+
+                    //    GetZip();
+                    //}
                     else
                     {
                         foreach (var _query in scripts)
                         {
                             string queryString = string.Empty;
                             db = new MySQLHelper();
+
+                            if (parameter[1] != "SI" && _query == "ARStored_5")
+                            {
+                                break;
+                            }
 
                             queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
 
@@ -349,7 +380,7 @@ namespace STRAINER_EXTRACT.Controller
 
                 }
 
-                ThreadHelper.SetValue(frm, frm.progressBar1, maxVal, maxVal);
+                ThreadHelper.SetValue(frm, frm.progressBar1, val, maxVal);
 
             }
             catch 

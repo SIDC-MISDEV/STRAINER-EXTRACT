@@ -111,6 +111,8 @@ namespace STRAINER_EXTRACT
 
                             break;
 
+
+
                         case "RC":
 
                             prefixes = prefix.Where(s => s.ObjectType == "14").Select(f => f.ObjectPrefix).ToList();
@@ -125,9 +127,13 @@ namespace STRAINER_EXTRACT
 
                         case "RV":
 
-                            prefixes = prefix.Where(s => s.ObjectType == "13").Select(f => f.ObjectPrefix).ToList();
+                            prefixes = prefix.Where(s => s.ObjectType == "20").Select(f => f.ObjectPrefix).ToList();
 
                             break;
+
+
+
+
 
                         default:
                             break;
@@ -186,6 +192,7 @@ namespace STRAINER_EXTRACT
                 controller.Extract(forGenerate, dtDate.Value.ToString("yyyy-MM-dd"));
 
                 MessageBox.Show("Generation completed!", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
             }
             catch(Exception er)
             {
@@ -194,7 +201,7 @@ namespace STRAINER_EXTRACT
             finally
             {
                 ThreadHelper.SetControlState(this, btnGenerate, true);
-                ThreadHelper.SetValue(this, progressBar1, 0, 0);
+                ThreadHelper.SetValue(this, progressBar1, 0, 100);
                 ThreadHelper.SetControlState(this, treeView1, true);
 
             }
