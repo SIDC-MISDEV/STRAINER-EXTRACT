@@ -168,6 +168,7 @@ namespace STRAINER_EXTRACT
             try
             {
                 var forGenerate = new List<string>();
+                List<string> rcTransType = new List<string>();
 
                 ThreadHelper.SetControlState(this, btnGenerate, false);
                 ThreadHelper.SetControlState(this, treeView1, false);
@@ -186,10 +187,23 @@ namespace STRAINER_EXTRACT
                     }
                 }
 
+                foreach (TreeNode rootNote in treeView1.Nodes)
+                {
+                    if (rootNote.Text == "AR")
+                    {
+                        foreach (TreeNode childNode in rootNote.Nodes)
+                        {
+                            rcTransType.Add(childNode.Text.ToString());
+                        }
+                    }
+                }
+
                 controller.ClearFile();
 
 
-                controller.Extract(forGenerate, dtDate.Value.ToString("yyyy-MM-dd"));
+                controller.Extract(forGenerate, dtDate.Value.ToString("yyyy-MM-dd"), rcTransType);
+
+                controller.FinalSync();
 
                 MessageBox.Show("Generation completed!", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 
@@ -201,7 +215,7 @@ namespace STRAINER_EXTRACT
             finally
             {
                 ThreadHelper.SetControlState(this, btnGenerate, true);
-                ThreadHelper.SetValue(this, progressBar1, 0, 100);
+                //ThreadHelper.SetValue(this, progressBar1, 0, 100);
                 ThreadHelper.SetControlState(this, treeView1, true);
 
             }

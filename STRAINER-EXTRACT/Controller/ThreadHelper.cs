@@ -40,20 +40,22 @@ namespace STRAINER_EXTRACT.Controller
             }
         }
 
-        public static void SetValue(Form f, ProgressBar c, int value, int maxVal)
-        {
-            if (c.InvokeRequired)
-            {
-                SetProgress d = new SetProgress(SetValue);
-                f.Invoke(d, new object[] { f, c, value, maxVal });
+        //public static void SetValue(Form f, ProgressBar c, int value, int maxVal)
+        //{
+        //    if (c.InvokeRequired)
+        //    {
+        //        SetProgress d = new SetProgress(SetValue);
+        //        f.Invoke(d, new object[] { f, c, value, maxVal });
                 
-            }
-            else
-            {
-                c.Value = value;
-                c.Maximum = maxVal;
-            }
-        }
+        //    }
+        //    else
+        //    {
+        //        c.Maximum = maxVal;
+        //        c.Value = value;
+                
+        //    }
+        //}
+
 
     }
 }

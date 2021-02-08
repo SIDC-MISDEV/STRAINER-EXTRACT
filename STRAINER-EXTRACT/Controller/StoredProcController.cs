@@ -22,6 +22,7 @@ namespace STRAINER_EXTRACT.Controller
         private string tempPath = Properties.Settings.Default.TEMP_FOLDER;
         private string syncFolders = Properties.Settings.Default.FOR_SYNC_FOLDER;
         private string dropSitePath = Properties.Settings.Default.DROPSITE_FOLDER;
+        private string finalSyncFolders = Properties.Settings.Default.FOR_FINAL_SYNC_FOLDER;
 
         frmMain frm;
 
@@ -31,6 +32,7 @@ namespace STRAINER_EXTRACT.Controller
         private Dictionary<string, string[]> storedProcedures = new Dictionary<string, string[]>()
         {
             { "AR", Properties.Settings.Default.AR_STORED_PROC.Split(',') },
+            { "AR2", Properties.Settings.Default.AR_STORED_PROC2.Split(',') },
             { "GI", Properties.Settings.Default.GI_STORED_PROC.Split(',') },
             { "GR", Properties.Settings.Default.GR_STORED_PROC.Split(',') },
             { "PR", Properties.Settings.Default.PR_STORED_PROC.Split(',') },
@@ -63,9 +65,13 @@ namespace STRAINER_EXTRACT.Controller
                 if (!Directory.Exists(Path.Combine(tempPath, folder)))
                     Directory.CreateDirectory(Path.Combine(tempPath, folder));
 
-                //For dropsite folder of compressed files.
+                //For dropsite temporary folder of compressed files.
                 if (!Directory.Exists(Path.Combine(syncFolders, folder)))
                     Directory.CreateDirectory(Path.Combine(syncFolders, folder));
+
+                //For dropsite final folder of compressed files.
+                if (!Directory.Exists(Path.Combine(finalSyncFolders, folder)))
+                    Directory.CreateDirectory(Path.Combine(finalSyncFolders, folder));
 
             }
         }
@@ -74,7 +80,7 @@ namespace STRAINER_EXTRACT.Controller
         //Delete text file in dropsitepath
         public void ClearFile()
         {
-
+            //txtfiles in every 1st dropsite folder
             foreach (var checkfolders in Directory.GetDirectories(dropSitePath))
             {
                 var checkdropSiteSubFolderFiles = Directory.GetFiles(checkfolders, "*.txt");
@@ -84,6 +90,16 @@ namespace STRAINER_EXTRACT.Controller
                     {
                         File.Delete(checknameFile);
                     }
+                }
+            }
+
+            //Dropsite folders of ready to transfer to projecterp path
+            foreach (var checkfolders in Directory.GetDirectories(syncFolders))
+            {
+                var checkdropSiteSubFolderFiles = Directory.GetFiles(checkfolders, "*.zip");
+                foreach (var checknameFile in checkdropSiteSubFolderFiles)
+                {
+                    File.Delete(checknameFile);
                 }
             }
         }
@@ -102,6 +118,47 @@ namespace STRAINER_EXTRACT.Controller
                 }
             }
         }
+
+        public void FinalSync()
+        {
+            string finalSync = string.Empty;
+
+            foreach (var finalFolders in Directory.GetDirectories(syncFolders))
+            {
+                string[] dropSiteTempSubFolderFiles = Directory.GetFiles(finalFolders, "*.zip");
+
+                try
+                {
+                    if (!Directory.Exists(Path.Combine(finalSyncFolders, finalFolders.Split('\\').Last())))
+                    {
+                        Directory.CreateDirectory(Path.Combine(finalSyncFolders, finalFolders.Split('\\').Last()));
+                    }
+
+                    finalSync = finalFolders.Split('\\').Last();
+
+                    foreach (var finalFile in dropSiteTempSubFolderFiles)
+                    {
+                        string finalFolder = finalSync;
+                        string fileZip = finalFile;
+
+                        File.Move(fileZip, Path.Combine(finalSyncFolders, finalFolder,  Path.GetFileName(finalFile)));
+                        //File.Copy(Path.Combine(finalFolders, fileZip), Path.Combine(finalPath, fileZip));
+                    }
+
+                }
+
+                finally
+                {
+                    foreach (var item in dropSiteTempSubFolderFiles)
+                    {
+                        File.Delete(item);
+                    }
+                }
+
+            }
+        }
+
+
 
 
 
@@ -266,15 +323,11 @@ namespace STRAINER_EXTRACT.Controller
             }
         }
 
-        public void Extract(List<string> query, string date)
+        public void Extract(List<string> query, string date, List<string> transTypeRC)
         {
 
             try
             {
-                int maxVal = Properties.Settings.Default.MAX_FILE;
-                int val = 0;
-
-
 
                 foreach (var item in query)
                 {
@@ -298,8 +351,7 @@ namespace STRAINER_EXTRACT.Controller
                             db = new MySQLHelper();
                             db.GetExtract(querys);
 
-                            val++;
-                            ThreadHelper.SetValue(frm, frm.progressBar1, val, maxVal);
+                           
                         }
 
 
@@ -312,23 +364,68 @@ namespace STRAINER_EXTRACT.Controller
                         {
                             string querys = string.Empty;
 
-                            if (i == 4)
+                            if (i == 3)
                             {
                                 querys = $"CALL IPStored_{i + 1}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}')";
                                 db = new MySQLHelper();
                                 db.GetExtract(querys);
 
-                                val++;
-                                ThreadHelper.SetValue(frm, frm.progressBar1, val, maxVal);
                             }
-
 
                         }
 
-
-
                         GetZip();
                     }
+                    else if (item=="AR_SI")
+                    {
+                        foreach (var _query in scripts)
+                        {
+                            string queryString = string.Empty;
+                            db = new MySQLHelper();
+
+                            //if (parameter[1] != "SI" && _query == "ARStored_5")
+                            //{
+                            //    break;
+
+                            //}
+
+                            ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {_query} ... ");
+
+                            queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+
+                            db.GetExtract(queryString);
+
+                            ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
+                        }
+
+                        GetZip();
+
+                        string[] nonmember = storedProcedures["AR2"];
+
+                        foreach (var _query in nonmember)
+                        {
+                            string queryString = string.Empty;
+                            db = new MySQLHelper();
+
+                            //if (parameter[1] != "SI" && _query == "ARStored_5")
+                            //{
+                            //    break;
+
+                            //}
+
+                            ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {_query} ... ");
+
+                            queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+
+                            db.GetExtract(queryString);
+
+                            ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
+                        }
+
+                        GetZip();
+
+                    }
+                
                     //else if (item != "AR_SI")
                     //{
 
@@ -353,6 +450,13 @@ namespace STRAINER_EXTRACT.Controller
 
                     //    GetZip();
                     //}
+                    else if(item == "RC")
+                    {
+                        foreach (var transType in transTypeRC)
+                        {
+
+                        }
+                    }
                     else
                     {
                         foreach (var _query in scripts)
@@ -360,27 +464,26 @@ namespace STRAINER_EXTRACT.Controller
                             string queryString = string.Empty;
                             db = new MySQLHelper();
 
-                            if (parameter[1] != "SI" && _query == "ARStored_5")
-                            {
-                                break;
-                            }
+                            //if (parameter[1] != "SI" && _query == "ARStored_5")
+                            //{
+                            //    break;
+                                
+                            //}
+
+                            ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {_query} ... ");
 
                             queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
 
                             db.GetExtract(queryString);
 
-                            val++;
-                            ThreadHelper.SetValue(frm, frm.progressBar1, val, maxVal);
+                            ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
                         }
-
-
 
                         GetZip();
                     }
 
                 }
-
-                ThreadHelper.SetValue(frm, frm.progressBar1, val, maxVal);
+                
 
             }
             catch 

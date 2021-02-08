@@ -38,6 +38,7 @@
             this.txtWarehouseCode = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnGenerate
@@ -72,11 +73,12 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(24, 686);
+            this.progressBar1.Location = new System.Drawing.Point(24, 745);
             this.progressBar1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(510, 35);
             this.progressBar1.TabIndex = 5;
+            this.progressBar1.Visible = false;
             // 
             // label2
             // 
@@ -131,11 +133,22 @@
             this.label1.TabIndex = 10;
             this.label1.Text = "Date:";
             // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatus.Location = new System.Drawing.Point(19, 684);
+            this.lblStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(0, 25);
+            this.lblStatus.TabIndex = 11;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(556, 742);
+            this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtWarehouseCode);
             this.Controls.Add(this.label3);
@@ -168,6 +181,7 @@
         private System.Windows.Forms.TextBox txtWarehouseCode;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
+        public System.Windows.Forms.Label lblStatus;
     }
 }
 

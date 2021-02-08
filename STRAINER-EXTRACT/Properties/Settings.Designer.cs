@@ -23,16 +23,6 @@ namespace STRAINER_EXTRACT.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=localhost;Database=_pinamucan;Username=root;Password=supervisor;")]
-        public string DB {
-            get {
-                return ((string)(this["DB"]));
-            }
-        }
-        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("AR,GI,GR,IP,PR,RC,RG,RV,")]
@@ -47,7 +37,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Projecterp\\Pinamucan\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\DropsiteTemp\\")]
         public string FOR_SYNC_FOLDER {
             get {
                 return ((string)(this["FOR_SYNC_FOLDER"]));
@@ -83,8 +73,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ARStored_1,ARStored_2,ARStored_3,ARStored_4,ARStored_5,ARStored_6,ARStored_7,ARSt" +
-            "ored_8")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ARStored_1,ARStored_2,ARStored_4")]
         public string AR_STORED_PROC {
             get {
                 return ((string)(this["AR_STORED_PROC"]));
@@ -96,7 +85,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("GIStored_1,GIStored_2,GIStored_3,GIStored_4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("GIStored_1,GIStored_2,GIStored_4")]
         public string GI_STORED_PROC {
             get {
                 return ((string)(this["GI_STORED_PROC"]));
@@ -108,7 +97,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("GRStored_1,GRStored_2,GRStored_3,GRStored_4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("GRStored_1,GRStored_2,GRStored_4")]
         public string GR_STORED_PROC {
             get {
                 return ((string)(this["GR_STORED_PROC"]));
@@ -132,7 +121,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("RCStored_1,RCStored_2,RCStored_3,RCStored_4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("RCStored_1,RCStored_2,RCStored_4")]
         public string RC_STORED_PROC {
             get {
                 return ((string)(this["RC_STORED_PROC"]));
@@ -144,7 +133,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("RGStored_1,RGStored_2,RGStored_3,RGStored_4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("RGStored_1,RGStored_2,RGStored_4")]
         public string RG_STORED_PROC {
             get {
                 return ((string)(this["RG_STORED_PROC"]));
@@ -156,7 +145,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("RVStored_1,RVStored_2,RVStored_3,RVStored_4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("RVStored_1,RVStored_2,RVStored_4")]
         public string RV_STORED_PROC {
             get {
                 return ((string)(this["RV_STORED_PROC"]));
@@ -180,7 +169,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SIDC-1-2-1-7")]
+        [global::System.Configuration.DefaultSettingValueAttribute("SIDC-1-2-1-3")]
         public string BRANCH_CODE {
             get {
                 return ((string)(this["BRANCH_CODE"]));
@@ -192,7 +181,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("WHC0013")]
+        [global::System.Configuration.DefaultSettingValueAttribute("WHC0001")]
         public string WAREHOUSE {
             get {
                 return ((string)(this["WAREHOUSE"]));
@@ -204,13 +193,35 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("71")]
-        public int MAX_FILE {
+        [global::System.Configuration.DefaultSettingValueAttribute("ARStored_5,ARStored_6,ARStored_8")]
+        public string AR_STORED_PROC2 {
             get {
-                return ((int)(this["MAX_FILE"]));
+                return ((string)(this["AR_STORED_PROC2"]));
             }
             set {
-                this["MAX_FILE"] = value;
+                this["AR_STORED_PROC2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=localhost;Database=_main;Username=root;Password=supervisor;")]
+        public string DB {
+            get {
+                return ((string)(this["DB"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Projecterp\\Main\\")]
+        public string FOR_FINAL_SYNC_FOLDER {
+            get {
+                return ((string)(this["FOR_FINAL_SYNC_FOLDER"]));
+            }
+            set {
+                this["FOR_FINAL_SYNC_FOLDER"] = value;
             }
         }
     }
