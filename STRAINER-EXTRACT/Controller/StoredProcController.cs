@@ -455,9 +455,9 @@ namespace STRAINER_EXTRACT.Controller
                     //}
                     else if(item == "RC_RC")
                     {
-                        foreach (var querries in scripts)
+                        foreach (var transType in transTypeRC)
                         {
-                            foreach (var transType in transTypeRC)
+                            foreach (var querries in scripts)
                             {
                                 string queryString = string.Empty;
                                 db = new MySQLHelper();
@@ -470,8 +470,10 @@ namespace STRAINER_EXTRACT.Controller
 
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {transType} - {querries} ... ");
 
-                                GetZip();
+                                
                             }
+
+                            GetZip();
                         }
                     }
                     else
