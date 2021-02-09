@@ -146,7 +146,10 @@ namespace STRAINER_EXTRACT.Controller
                     }
 
                 }
-
+                catch
+                {
+                    throw;
+                }
                 finally
                 {
                     foreach (var item in dropSiteTempSubFolderFiles)
@@ -450,11 +453,25 @@ namespace STRAINER_EXTRACT.Controller
 
                     //    GetZip();
                     //}
-                    else if(item == "RC")
+                    else if(item == "RC_RC")
                     {
-                        foreach (var transType in transTypeRC)
+                        foreach (var querries in scripts)
                         {
+                            foreach (var transType in transTypeRC)
+                            {
+                                string queryString = string.Empty;
+                                db = new MySQLHelper();
 
+                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {transType} - {querries} ... ");
+
+                                queryString = $"CALL {querries}('{transType}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+
+                                db.GetExtract(queryString);
+
+                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {transType} - {querries} ... ");
+
+                                GetZip();
+                            }
                         }
                     }
                     else

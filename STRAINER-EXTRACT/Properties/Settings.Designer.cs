@@ -206,7 +206,7 @@ namespace STRAINER_EXTRACT.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=localhost;Database=_main;Username=root;Password=supervisor;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=localhost;Database=_pallocan;Username=root;Password=supervisor;")]
         public string DB {
             get {
                 return ((string)(this["DB"]));
@@ -215,7 +215,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Projecterp\\Main\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Projecterp\\Pallocan\\")]
         public string FOR_FINAL_SYNC_FOLDER {
             get {
                 return ((string)(this["FOR_FINAL_SYNC_FOLDER"]));
