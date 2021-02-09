@@ -85,7 +85,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("GIStored_1,GIStored_2,GIStored_4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("GIStored_1_Ref,GIStored_2_Ref,GIStored_4_Ref")]
         public string GI_STORED_PROC {
             get {
                 return ((string)(this["GI_STORED_PROC"]));
@@ -97,7 +97,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("GRStored_1,GRStored_2,GRStored_4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("GRStored_1_Ref,GRStored_2_Ref,GRStored_4_Ref")]
         public string GR_STORED_PROC {
             get {
                 return ((string)(this["GR_STORED_PROC"]));
@@ -109,7 +109,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("PRStored_1, PRStored_2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("PRStored_1_Ref, PRStored_2_Ref")]
         public string PR_STORED_PROC {
             get {
                 return ((string)(this["PR_STORED_PROC"]));
@@ -133,7 +133,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("RGStored_1,RGStored_2,RGStored_4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("RGStored_1_Ref,RGStored_2_Ref,RGStored_4_Ref")]
         public string RG_STORED_PROC {
             get {
                 return ((string)(this["RG_STORED_PROC"]));
@@ -145,7 +145,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("RVStored_1,RVStored_2,RVStored_4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("RVStored_1_Ref,RVStored_2_Ref,RVStored_4_Ref")]
         public string RV_STORED_PROC {
             get {
                 return ((string)(this["RV_STORED_PROC"]));
@@ -169,7 +169,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SIDC-1-2-1-3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("SIDC-1-2-1-1")]
         public string BRANCH_CODE {
             get {
                 return ((string)(this["BRANCH_CODE"]));
@@ -181,7 +181,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("WHC0001")]
+        [global::System.Configuration.DefaultSettingValueAttribute("WHC0003")]
         public string WAREHOUSE {
             get {
                 return ((string)(this["WAREHOUSE"]));
@@ -222,6 +222,18 @@ namespace STRAINER_EXTRACT.Properties {
             }
             set {
                 this["FOR_FINAL_SYNC_FOLDER"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("AR,IP,RC")]
+        public string GENERATION_BY_BATCH {
+            get {
+                return ((string)(this["GENERATION_BY_BATCH"]));
+            }
+            set {
+                this["GENERATION_BY_BATCH"] = value;
             }
         }
     }

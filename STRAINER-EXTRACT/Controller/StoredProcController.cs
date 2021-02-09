@@ -23,11 +23,14 @@ namespace STRAINER_EXTRACT.Controller
         private string syncFolders = Properties.Settings.Default.FOR_SYNC_FOLDER;
         private string dropSitePath = Properties.Settings.Default.DROPSITE_FOLDER;
         private string finalSyncFolders = Properties.Settings.Default.FOR_FINAL_SYNC_FOLDER;
+        private string byBatchGeneration = Properties.Settings.Default.GENERATION_BY_BATCH;
 
         frmMain frm;
 
         private string zipPassword = "m1s@dm1n";
         private string compressedFileName = string.Empty;
+
+        List<string> reference = new List<string>();
 
         private Dictionary<string, string[]> storedProcedures = new Dictionary<string, string[]>()
         {
@@ -161,7 +164,12 @@ namespace STRAINER_EXTRACT.Controller
             }
         }
 
+        private void CompressFiles(string source, string destination)
+        {
+            
 
+            
+        }
 
 
 
@@ -331,146 +339,141 @@ namespace STRAINER_EXTRACT.Controller
 
             try
             {
+                reference = db.GetReferenceNumbers(date, date);
 
                 foreach (var item in query)
                 {
-
                     var parameter = item.Split('_');
-
                     string[] scripts = storedProcedures[parameter[0]];
+                    string[] byBatch = byBatchGeneration.Split(',');
 
-                    if (item == "IP_SI")
+                    if (byBatchGeneration.Contains(item.Substring(0, 2)))
                     {
-                        for (int i = 0; i <= scripts.Length - 1; i++)
+                        //if trans type generation is by batch.
+                        if (item == "IP_SI")
                         {
-                            string querys = string.Empty;
-
-                            if (i == 4)
-                                break;
-                            else
-                                querys = $"CALL IPStored_{i + 1}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}')";
-
-
-                            db = new MySQLHelper();
-                            db.GetExtract(querys);
-
-                           
-                        }
-
-
-
-                        GetZip();
-                    }
-                    else if (item == "IP_OR")
-                    {
-                        for (int i = 0; i <= scripts.Length - 1; i++)
-                        {
-                            string querys = string.Empty;
-
-                            if (i == 3)
+                            for (int i = 0; i <= scripts.Length - 1; i++)
                             {
-                                querys = $"CALL IPStored_{i + 1}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}')";
+                                string querys = string.Empty;
+
+                                if (i == 4)
+                                    break;
+                                else
+                                    querys = $"CALL IPStored_{i + 1}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}')";
+
+
                                 db = new MySQLHelper();
                                 db.GetExtract(querys);
 
+
                             }
 
+                            GetZip();
                         }
-
-                        GetZip();
-                    }
-                    else if (item=="AR_SI")
-                    {
-                        foreach (var _query in scripts)
+                        else if(item == "IP_OR")
                         {
-                            string queryString = string.Empty;
-                            db = new MySQLHelper();
+                            for (int i = 0; i <= scripts.Length - 1; i++)
+                            {
+                                string querys = string.Empty;
 
-                            //if (parameter[1] != "SI" && _query == "ARStored_5")
-                            //{
-                            //    break;
+                                if (i == 3)
+                                {
+                                    querys = $"CALL IPStored_{i + 1}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}')";
+                                    db = new MySQLHelper();
+                                    db.GetExtract(querys);
 
-                            //}
+                                }
 
-                            ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {_query} ... ");
+                            }
 
-                            queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
-
-                            db.GetExtract(queryString);
-
-                            ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
+                            GetZip();
                         }
-
-                        GetZip();
-
-                        string[] nonmember = storedProcedures["AR2"];
-
-                        foreach (var _query in nonmember)
+                        else if(item == "AR_SI")
                         {
-                            string queryString = string.Empty;
-                            db = new MySQLHelper();
-
-                            //if (parameter[1] != "SI" && _query == "ARStored_5")
-                            //{
-                            //    break;
-
-                            //}
-
-                            ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {_query} ... ");
-
-                            queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
-
-                            db.GetExtract(queryString);
-
-                            ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
-                        }
-
-                        GetZip();
-
-                    }
-                
-                    //else if (item != "AR_SI")
-                    //{
-
-                    //    for (int i = 0; i <= scripts.Length - 1; i++)
-                    //    {
-                    //        string querys = string.Empty;
-
-                    //        if (i == 4)
-                    //            break;
-                    //        else
-                    //            querys = $"CALL ARStored_{i + 1}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
-
-
-                    //        db = new MySQLHelper();
-                    //        db.GetExtract(querys);
-
-                    //        val++;
-                    //        ThreadHelper.SetValue(frm, frm.progressBar1, val, maxVal);
-                    //    }
-
-
-
-                    //    GetZip();
-                    //}
-                    else if(item == "RC_RC")
-                    {
-                        foreach (var transType in transTypeRC)
-                        {
-                            foreach (var querries in scripts)
+                            foreach (var _query in scripts)
                             {
                                 string queryString = string.Empty;
                                 db = new MySQLHelper();
 
-                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {transType} - {querries} ... ");
+                                //if (parameter[1] != "SI" && _query == "ARStored_5")
+                                //{
+                                //    break;
 
-                                queryString = $"CALL {querries}('{transType}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+                                //}
+
+                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {_query} ... ");
+
+                                queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
 
                                 db.GetExtract(queryString);
 
-                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {transType} - {querries} ... ");
+                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
+                            }
 
-                                
+                            GetZip();
+
+                            string[] nonmember = storedProcedures["AR2"];
+
+                            foreach (var _query in nonmember)
+                            {
+                                string queryString = string.Empty;
+                                db = new MySQLHelper();
+
+                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {_query} ... ");
+
+                                queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+
+                                db.GetExtract(queryString);
+
+                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
+                            }
+
+                            GetZip();
+                        }
+                        else if (item == "RC_RC")
+                        {
+                            foreach (var transType in transTypeRC)
+                            {
+                                foreach (var querries in scripts)
+                                {
+                                    string queryString = string.Empty;
+                                    db = new MySQLHelper();
+
+                                    ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {transType} - {querries} ... ");
+
+                                    queryString = $"CALL {querries}('{transType}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+
+                                    db.GetExtract(queryString);
+
+                                    ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {transType} - {querries} ... ");
+
+
+                                }
+
+                                GetZip();
+                            }
+
+                        }
+                        else
+                        {
+                            foreach (var _query in scripts)
+                            {
+                                string queryString = string.Empty;
+                                db = new MySQLHelper();
+
+                                //if (parameter[1] != "SI" && _query == "ARStored_5")
+                                //{
+                                //    break;
+
+                                //}
+
+                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {_query} ... ");
+
+                                queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+
+                                db.GetExtract(queryString);
+
+                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
                             }
 
                             GetZip();
@@ -478,30 +481,203 @@ namespace STRAINER_EXTRACT.Controller
                     }
                     else
                     {
-                        foreach (var _query in scripts)
+                        //if trans type generation is per reference.
+                        for (int i = 0; i < reference.Count; i++)
                         {
-                            string queryString = string.Empty;
-                            db = new MySQLHelper();
+                            if (parameter[0] == reference[i].Substring(0, 2))
+                            {
+                                foreach (var querys in scripts)
+                                {
+                                    string queryString = string.Empty;
+                                    db = new MySQLHelper();
 
-                            //if (parameter[1] != "SI" && _query == "ARStored_5")
-                            //{
-                            //    break;
-                                
-                            //}
+                                    ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {querys} - {reference[i]} ... ");
 
-                            ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {_query} ... ");
+                                    queryString = $"CALL {querys} ('{parameter[1]}',  '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{reference[i]}');";
 
-                            queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+                                    db.GetExtract(queryString);
 
-                            db.GetExtract(queryString);
+                                    ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {querys} - {reference[i]} ... ");
+                                }
 
-                            ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
+                                GetZip();
+                            }
+
+                            
                         }
-
-                        GetZip();
                     }
-
                 }
+
+                //foreach (var item in query)
+                //{
+
+                //    var parameter = item.Split('_');
+
+                //    string[] scripts = storedProcedures[parameter[0]];
+
+                //    if (item == "IP_SI")
+                //    {
+                //        for (int i = 0; i <= scripts.Length - 1; i++)
+                //        {
+                //            string querys = string.Empty;
+
+                //            if (i == 4)
+                //                break;
+                //            else
+                //                querys = $"CALL IPStored_{i + 1}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}')";
+
+
+                //            db = new MySQLHelper();
+                //            db.GetExtract(querys);
+
+                           
+                //        }
+
+
+
+                //        GetZip();
+                //    }
+                //    else if (item == "IP_OR")
+                //    {
+                //        for (int i = 0; i <= scripts.Length - 1; i++)
+                //        {
+                //            string querys = string.Empty;
+
+                //            if (i == 3)
+                //            {
+                //                querys = $"CALL IPStored_{i + 1}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}')";
+                //                db = new MySQLHelper();
+                //                db.GetExtract(querys);
+
+                //            }
+
+                //        }
+
+                //        GetZip();
+                //    }
+                //    else if (item=="AR_SI")
+                //    {
+                //        foreach (var _query in scripts)
+                //        {
+                //            string queryString = string.Empty;
+                //            db = new MySQLHelper();
+
+                //            //if (parameter[1] != "SI" && _query == "ARStored_5")
+                //            //{
+                //            //    break;
+
+                //            //}
+
+                //            ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {_query} ... ");
+
+                //            queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+
+                //            db.GetExtract(queryString);
+
+                //            ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
+                //        }
+
+                //        GetZip();
+
+                //        string[] nonmember = storedProcedures["AR2"];
+
+                //        foreach (var _query in nonmember)
+                //        {
+                //            string queryString = string.Empty;
+                //            db = new MySQLHelper();
+
+                //            //if (parameter[1] != "SI" && _query == "ARStored_5")
+                //            //{
+                //            //    break;
+
+                //            //}
+
+                //            ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {_query} ... ");
+
+                //            queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+
+                //            db.GetExtract(queryString);
+
+                //            ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
+                //        }
+
+                //        GetZip();
+
+                //    }
+                
+                //    //else if (item != "AR_SI")
+                //    //{
+
+                //    //    for (int i = 0; i <= scripts.Length - 1; i++)
+                //    //    {
+                //    //        string querys = string.Empty;
+
+                //    //        if (i == 4)
+                //    //            break;
+                //    //        else
+                //    //            querys = $"CALL ARStored_{i + 1}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+
+
+                //    //        db = new MySQLHelper();
+                //    //        db.GetExtract(querys);
+
+                //    //        val++;
+                //    //        ThreadHelper.SetValue(frm, frm.progressBar1, val, maxVal);
+                //    //    }
+
+
+
+                //    //    GetZip();
+                //    //}
+                //    else if(item == "RC_RC")
+                //    {
+                //        foreach (var transType in transTypeRC)
+                //        {
+                //            foreach (var querries in scripts)
+                //            {
+                //                string queryString = string.Empty;
+                //                db = new MySQLHelper();
+
+                //                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {transType} - {querries} ... ");
+
+                //                queryString = $"CALL {querries}('{transType}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+
+                //                db.GetExtract(queryString);
+
+                //                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {transType} - {querries} ... ");
+
+                                
+                //            }
+
+                //            GetZip();
+                //        }
+                //    }
+                //    else
+                //    {
+                //        foreach (var _query in scripts)
+                //        {
+                //            string queryString = string.Empty;
+                //            db = new MySQLHelper();
+
+                //            //if (parameter[1] != "SI" && _query == "ARStored_5")
+                //            //{
+                //            //    break;
+                                
+                //            //}
+
+                //            ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {_query} ... ");
+
+                //            queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+
+                //            db.GetExtract(queryString);
+
+                //            ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
+                //        }
+
+                //        GetZip();
+                //    }
+
+                //}
                 
 
             }

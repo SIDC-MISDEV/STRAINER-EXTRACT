@@ -35,18 +35,50 @@ namespace STRAINER_EXTRACT.Service
 
                     using (cmd = new MySqlCommand(query, conn))
                     {
-                        //if your quer/script is stored procedure use the code below
-                        //cmd.CommandType = CommandType.StoredProcedure;
-
-                        //parameters
-                        //cmd.Parameters.AddWithValue("@SpName", view.EmployeeId);
                         cmd.CommandTimeout = 0;
-
                         cmd.ExecuteNonQuery();
                     }
 
                 }
 
+            }
+            catch
+            {
+
+                throw;
+            }
+        }
+
+        public List<string> GetReferenceNumbers(string dateFrom, string dateTo)
+        {
+            try
+            {
+                List<string> val = new List<string>();
+
+                using (conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    query = @"SELECT DISTINCT reference FROM ledger where DATE(date) BETWEEN @dateFrom AND @dateTo
+                        AND LEFT(reference, 2) NOT IN (SELECT prefix FROM serial where objectType IN (13, 24, 14)) ORDER BY reference ASC;";
+
+                    using (cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@dateFrom", dateFrom);
+                        cmd.Parameters.AddWithValue("@dateTo", dateTo);
+
+                        using (var dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                val.Add(dr["reference"].ToString());
+                            }
+                        }
+                    }
+
+                }
+
+                return val;
             }
             catch
             {

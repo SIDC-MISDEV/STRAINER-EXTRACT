@@ -18,31 +18,31 @@
       <Value Profile="(Default)">ARStored_1,ARStored_2,ARStored_4</Value>
     </Setting>
     <Setting Name="GI_STORED_PROC" Type="System.String" Scope="User">
-      <Value Profile="(Default)">GIStored_1,GIStored_2,GIStored_4</Value>
+      <Value Profile="(Default)">GIStored_1_Ref,GIStored_2_Ref,GIStored_4_Ref</Value>
     </Setting>
     <Setting Name="GR_STORED_PROC" Type="System.String" Scope="User">
-      <Value Profile="(Default)">GRStored_1,GRStored_2,GRStored_4</Value>
+      <Value Profile="(Default)">GRStored_1_Ref,GRStored_2_Ref,GRStored_4_Ref</Value>
     </Setting>
     <Setting Name="PR_STORED_PROC" Type="System.String" Scope="User">
-      <Value Profile="(Default)">PRStored_1, PRStored_2</Value>
+      <Value Profile="(Default)">PRStored_1_Ref, PRStored_2_Ref</Value>
     </Setting>
     <Setting Name="RC_STORED_PROC" Type="System.String" Scope="User">
       <Value Profile="(Default)">RCStored_1,RCStored_2,RCStored_4</Value>
     </Setting>
     <Setting Name="RG_STORED_PROC" Type="System.String" Scope="User">
-      <Value Profile="(Default)">RGStored_1,RGStored_2,RGStored_4</Value>
+      <Value Profile="(Default)">RGStored_1_Ref,RGStored_2_Ref,RGStored_4_Ref</Value>
     </Setting>
     <Setting Name="RV_STORED_PROC" Type="System.String" Scope="User">
-      <Value Profile="(Default)">RVStored_1,RVStored_2,RVStored_4</Value>
+      <Value Profile="(Default)">RVStored_1_Ref,RVStored_2_Ref,RVStored_4_Ref</Value>
     </Setting>
     <Setting Name="IP_STORED_PROC" Type="System.String" Scope="User">
       <Value Profile="(Default)">IPStored_1,IPStored_2,IPStored_3,IPStored_4,IPStored_5</Value>
     </Setting>
     <Setting Name="BRANCH_CODE" Type="System.String" Scope="User">
-      <Value Profile="(Default)">SIDC-1-2-1-3</Value>
+      <Value Profile="(Default)">SIDC-1-2-1-1</Value>
     </Setting>
     <Setting Name="WAREHOUSE" Type="System.String" Scope="User">
-      <Value Profile="(Default)">WHC0001</Value>
+      <Value Profile="(Default)">WHC0003</Value>
     </Setting>
     <Setting Name="AR_STORED_PROC2" Type="System.String" Scope="User">
       <Value Profile="(Default)">ARStored_5,ARStored_6,ARStored_8</Value>
@@ -56,6 +56,9 @@
     </Setting>
     <Setting Name="FOR_FINAL_SYNC_FOLDER" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\Projecterp\Pallocan\</Value>
+    </Setting>
+    <Setting Name="GENERATION_BY_BATCH" Type="System.String" Scope="User">
+      <Value Profile="(Default)">AR,IP,RC</Value>
     </Setting>
   </Settings>
 </SettingsFile>
