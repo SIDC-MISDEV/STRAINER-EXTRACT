@@ -199,6 +199,7 @@ namespace STRAINER_EXTRACT
                 }
 
                 controller.ClearFile();
+                controller.ClearFile(Properties.Settings.Default.TEMP_FOLDER);
 
 
                 controller.Extract(forGenerate, dtDate.Value.ToString("yyyy-MM-dd"), rcTransType);
