@@ -169,6 +169,8 @@ namespace STRAINER_EXTRACT
             {
                 var forGenerate = new List<string>();
                 List<string> rcTransType = new List<string>();
+                List<string> trType = new List<string>();
+                string trVal = string.Empty;
 
                 ThreadHelper.SetControlState(this, btnGenerate, false);
                 ThreadHelper.SetControlState(this, treeView1, false);
@@ -182,7 +184,15 @@ namespace STRAINER_EXTRACT
                             if (childNode.Checked)
                             {
                                 forGenerate.Add($"{rootNote.Text}_{childNode.Text}");
+                                trType.Add(childNode.Text.ToString());
                             }
+                        }
+                    }
+                    else
+                    {
+                        foreach (TreeNode childNode in rootNote.Nodes)
+                        {
+                            trType.Add(childNode.Text.ToString());
                         }
                     }
                 }
@@ -204,9 +214,15 @@ namespace STRAINER_EXTRACT
 
                 controller.Extract(forGenerate, dtDate.Value.ToString("yyyy-MM-dd"), rcTransType);
 
-                controller.FinalSync();
+                trVal = $"'{string.Join(",'", trType)}'";
 
+                //update transaction ectracted
+                controller.UpdateExtracted(dtDate.Value.ToString("yyyy-MM-dd"), trVal);
+
+                controller.FinalSync();
+                //lblStatus.Text = "";
                 MessageBox.Show("Generation completed!", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 
             }
             catch(Exception er)
@@ -215,6 +231,7 @@ namespace STRAINER_EXTRACT
             }
             finally
             {
+                ThreadHelper.SetLabel(this, lblStatus, "");
                 ThreadHelper.SetControlState(this, btnGenerate, true);
                 //ThreadHelper.SetValue(this, progressBar1, 0, 100);
                 ThreadHelper.SetControlState(this, treeView1, true);

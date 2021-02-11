@@ -14,6 +14,7 @@ namespace STRAINER_EXTRACT.Service
 
         private MySqlConnection conn;
         private MySqlCommand cmd;
+        private MySqlTransaction trans;
        
         private string connectionString = Properties.Settings.Default.DB;
         private string branchName = Properties.Settings.Default.BRANCH_CODE;
@@ -157,6 +158,45 @@ namespace STRAINER_EXTRACT.Service
             catch
             {
 
+                throw;
+            }
+        }
+
+        public void UpdateExtracted(string dates, string trType)
+        {
+
+
+            try
+            {
+
+
+                using (conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+                    trans = conn.BeginTransaction(IsolationLevel.ReadCommitted);
+
+                    query = @"update invoice i set i.extracted='Y' where i.extracted ='N' and left(i.reference,2) IN
+                     (@trtype) and date(i.date)=@dates and
+                     not i.cancelled and  i.quantity<>'0';
+                     update ledger l set l.extracted='Y' where l.extracted='N' and left(l.reference,2) in ('SI','OR') and  date(l.date)=@dates ;
+                     update transactionpayments a set a.extracted='Y' where a.extracted='N' and left(a.reference,2) in ('SI','OR') and  date(a.date)=@dates ;";
+
+                    using (cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.Parameters.AddWithValue("@dates", dates);
+                        cmd.Parameters.AddWithValue("@trtype", trType);
+                        cmd.ExecuteNonQuery();
+                        trans.Commit();
+                    }
+
+                }
+
+
+            }
+            catch
+            {
+                trans.Rollback();
                 throw;
             }
         }

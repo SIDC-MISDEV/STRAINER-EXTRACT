@@ -179,9 +179,12 @@ namespace STRAINER_EXTRACT.Controller
             //string tempPath = @"C:\TempPath\";
             string tempFullPath = string.Empty;
 
+            int counts = 0;
+
             foreach (var folders in Directory.GetDirectories(dropSitePath))
             {
                 string[] dropSiteSubFolderFiles = Directory.GetFiles(folders, "*.txt");
+                string folderName = folders.Split('\\').Last();
 
                 try
                 {
@@ -248,16 +251,18 @@ namespace STRAINER_EXTRACT.Controller
                         {
 
                             string fileName = string.Empty;
+                            string[] splitter = new string[] { };
+
 
                             string compressedFilePath = Path.Combine(syncFolders, folders.Split('\\').Last());
 
-                            foreach (var nameFile in dropSiteSubFolderFiles)
+                            foreach (var nameFile in Directory.GetFiles(folders, "*.txt"))
                             {
-
                                 fileName = Path.GetFileNameWithoutExtension(nameFile);
                                 //char[] delimiters = {'_'};
-                                string[] splitter = fileName.Split('_');
-                                fileName = $"{splitter[0]}_{splitter[1]}_{splitter[2]}_{splitter[3]}_{splitter[4]}";
+                                splitter = fileName.Split('_');
+                                fileName = $"{splitter[0]}_{splitter[1]}_{splitter[2]}_{splitter[3]}_{splitter[4]}_{splitter[6]}";
+
                                 break;
 
 
@@ -265,15 +270,35 @@ namespace STRAINER_EXTRACT.Controller
 
                             var zipFiles = Directory.GetFiles(compressedFilePath, "*.zip");
 
-                            if (zipFiles.Count() > 0)
+                            if (byBatchGeneration.Split(',').Contains(folderName))
                             {
-                                int count = zipFiles.Count() + 1;
-                                compressedFileName = $"{fileName}_{count}.zip";
+                                if (zipFiles.Count() > 0)
+                                {
+
+                                    int count = zipFiles.Count() + 1;
+                                    compressedFileName = $"{fileName}_{count}.zip";
+                                }
+                                else
+                                {
+                                    compressedFileName = $"{fileName}_1.zip";
+                                }
                             }
                             else
                             {
-                                compressedFileName = $"{fileName}_1.zip";
+                                compressedFileName = $"{fileName}.zip";
                             }
+                            
+
+                            //if (zipFiles.Count() > 0)
+                            //{
+
+                            //    int count = zipFiles.Count() + 1;
+                            //    compressedFileName = $"{fileName}_{count}.zip";
+                            //}
+                            //else
+                            //{
+                            //    compressedFileName = $"{fileName}_1.zip";
+                            //}
 
                             zip.Password = zipPassword;
 
@@ -285,6 +310,10 @@ namespace STRAINER_EXTRACT.Controller
 
                         }
                     }
+                }
+                catch
+                {
+                    throw;
                 }
                 finally
                 {
@@ -311,6 +340,22 @@ namespace STRAINER_EXTRACT.Controller
 
                 return result;
                 
+            }
+            catch
+            {
+
+                throw;
+            }
+        }
+
+        public void UpdateExtracted(string dates, string trtypr)
+        {
+            try
+            {
+                db = new MySQLHelper();
+
+                db.UpdateExtracted(dates, trtypr);
+
             }
             catch
             {
@@ -484,7 +529,7 @@ namespace STRAINER_EXTRACT.Controller
                         //if trans type generation is per reference.
                         for (int i = 0; i < reference.Count; i++)
                         {
-                            if (parameter[0] == reference[i].Substring(0, 2))
+                            if (parameter[1] == reference[i].Substring(0, 2))
                             {
                                 foreach (var querys in scripts)
                                 {
