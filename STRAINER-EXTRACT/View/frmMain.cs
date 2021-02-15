@@ -156,11 +156,18 @@ namespace STRAINER_EXTRACT
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
-            treeView1.Enabled = false;
+            if (!string.IsNullOrEmpty(txtBranchName.Text) && !string.IsNullOrEmpty(txtWarehouseCode.Text))
+            {
+                treeView1.Enabled = false;
 
-            var thread = new Thread(StartGeneration);
-            thread.IsBackground = true;
-            thread.Start();
+                var thread = new Thread(StartGeneration);
+                thread.IsBackground = true;
+                thread.Start();
+            }
+            else
+            {
+                MessageBox.Show(this, "Please set branch code and warehouse code before generating.",Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void StartGeneration()
