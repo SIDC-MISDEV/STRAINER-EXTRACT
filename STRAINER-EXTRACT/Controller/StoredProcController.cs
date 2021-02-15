@@ -173,7 +173,7 @@ namespace STRAINER_EXTRACT.Controller
 
 
 
-        public void GetZip()
+        public void GetZip(string dateGen)
         {
             
             //string tempPath = @"C:\TempPath\";
@@ -215,33 +215,33 @@ namespace STRAINER_EXTRACT.Controller
 
                             var tempFolderFiles = Directory.GetFiles(tempFilePath, "*.txt");
 
-                            foreach (var tempFile in tempFolderFiles)
-                            {
+                            //foreach (var tempFile in tempFolderFiles)
+                            //{
 
-                                string tempTextFile = Path.GetFileNameWithoutExtension(tempFile); // Textfile from tempFolderFiles
+                            //    string tempTextFile = Path.GetFileNameWithoutExtension(tempFile); // Textfile from tempFolderFiles
 
-                                string[] tempSplitter = tempTextFile.Split('_');
-                                newTempFile = $"{tempSplitter[0]}_{tempSplitter[1]}_{tempSplitter[2]}_{tempSplitter[3]}_{tempSplitter[4]}_{tempSplitter[5]}";
+                            //    string[] tempSplitter = tempTextFile.Split('_');
+                            //    newTempFile = $"{tempSplitter[0]}_{tempSplitter[1]}_{tempSplitter[2]}_{tempSplitter[3]}_{tempSplitter[4]}_{tempSplitter[5]}";
 
 
-                                if (newTextFile == newTempFile)
-                                {
-                                    count++;
-                                }
+                            //    if (newTextFile == newTempFile)
+                            //    {
+                            //        count++;
+                            //    }
 
-                            }
+                            //}
 
-                            if (count > 1)
-                            {
-                                newTextFile = $"{newTextFile}_{count}.txt";
-                                //info.MoveTo(Path.Combine(folders,newTextFile));
-                                File.Move(textFile, Path.Combine(folders, newTextFile));
-                                File.Copy(Path.Combine(folders, newTextFile), Path.Combine(tempFilePath, newTextFile));
-                            }
-                            else
-                            {
-                                File.Copy(textFile, Path.Combine(tempFilePath, Path.GetFileName(textFile)));
-                            }
+                            //if (count > 1 && byBatchGeneration.Split(',').Contains(folderName))
+                            //{
+                            //    newTextFile = $"{newTextFile}_{count}.txt";
+                            //    //info.MoveTo(Path.Combine(folders,newTextFile));
+                            //    File.Move(textFile, Path.Combine(folders, newTextFile));
+                            //    File.Copy(Path.Combine(folders, newTextFile), Path.Combine(tempFilePath, newTextFile));
+                            //}
+                            //else
+                            //{
+                            //    File.Copy(textFile, Path.Combine(tempFilePath, Path.GetFileName(textFile)));
+                            //}
 
                         }
 
@@ -261,7 +261,23 @@ namespace STRAINER_EXTRACT.Controller
                                 fileName = Path.GetFileNameWithoutExtension(nameFile);
                                 //char[] delimiters = {'_'};
                                 splitter = fileName.Split('_');
-                                fileName = $"{splitter[0]}_{splitter[1]}_{splitter[2]}_{splitter[3]}_{splitter[4]}_{splitter[6]}";
+
+                                //fileName = $"{splitter[0]}_{splitter[1]}_{splitter[2]}_{splitter[3]}_{splitter[4]}_{splitter[6]}";
+
+
+                                if (byBatchGeneration.Split(',').Contains(folderName))
+                                {
+                                    if (splitter[6] != "1")
+                                    {
+                                        fileName = $"{splitter[0]}_{splitter[1]}_{splitter[2]}_{splitter[3]}_{splitter[4]}_{splitter[6]}";
+                                    }
+                                    else
+                                    {
+                                        fileName = $"{splitter[0]}_{splitter[1]}_{splitter[2]}_{splitter[3]}_{splitter[4]}_{splitter[2]}-{dateGen}-1213-SIDC";
+                                    }
+                                }
+                                else
+                                    fileName = $"{splitter[0]}_{splitter[1]}_{splitter[2]}_{splitter[3]}_{splitter[4]}_{splitter[6]}";
 
                                 break;
 
@@ -270,23 +286,26 @@ namespace STRAINER_EXTRACT.Controller
 
                             var zipFiles = Directory.GetFiles(compressedFilePath, "*.zip");
 
-                            if (byBatchGeneration.Split(',').Contains(folderName))
-                            {
-                                if (zipFiles.Count() > 0)
-                                {
+                            compressedFileName = $"{fileName}.zip";
 
-                                    int count = zipFiles.Count() + 1;
-                                    compressedFileName = $"{fileName}_{count}.zip";
-                                }
-                                else
-                                {
-                                    compressedFileName = $"{fileName}_1.zip";
-                                }
-                            }
-                            else
-                            {
-                                compressedFileName = $"{fileName}.zip";
-                            }
+                            //if (byBatchGeneration.Split(',').Contains(folderName))
+                            //{
+                            //    if (zipFiles.Count() > 0)
+                            //    {
+
+                            //        int count = zipFiles.Count() + 1;
+                            //        compressedFileName = $"{fileName}_{count}.zip";
+                            //    }
+                            //    else
+                            //    {
+                            //        compressedFileName = $"{fileName}_1.zip";
+                            //    }
+
+                            //}
+                            //else
+                            //{
+                            //    compressedFileName = $"{fileName}.zip";
+                            //}
                             
 
                             //if (zipFiles.Count() > 0)
@@ -413,7 +432,7 @@ namespace STRAINER_EXTRACT.Controller
 
                             }
 
-                            GetZip();
+                            GetZip(date);
                         }
                         else if(item == "IP_OR")
                         {
@@ -431,7 +450,11 @@ namespace STRAINER_EXTRACT.Controller
 
                             }
 
-                            GetZip();
+                            GetZip(date);
+                        }
+                        else if(item == "AR_WS")
+                        {
+
                         }
                         else if(item == "AR_SI")
                         {
@@ -455,7 +478,7 @@ namespace STRAINER_EXTRACT.Controller
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
                             }
 
-                            GetZip();
+                            GetZip(date);
 
                             string[] nonmember = storedProcedures["AR2"];
 
@@ -473,7 +496,7 @@ namespace STRAINER_EXTRACT.Controller
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
                             }
 
-                            GetZip();
+                            GetZip(date);
                         }
                         else if (item == "RC_RC")
                         {
@@ -495,7 +518,7 @@ namespace STRAINER_EXTRACT.Controller
 
                                 }
 
-                                GetZip();
+                                GetZip(date);
                             }
 
                         }
@@ -521,7 +544,7 @@ namespace STRAINER_EXTRACT.Controller
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
                             }
 
-                            GetZip();
+                            GetZip(date);
                         }
                     }
                     else
@@ -545,7 +568,7 @@ namespace STRAINER_EXTRACT.Controller
                                     ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {querys} - {reference[i]} ... ");
                                 }
 
-                                GetZip();
+                                GetZip(date);
                             }
 
                             

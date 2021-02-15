@@ -38,14 +38,14 @@
     <Setting Name="IP_STORED_PROC" Type="System.String" Scope="User">
       <Value Profile="(Default)">IPStored_1,IPStored_2,IPStored_3,IPStored_4,IPStored_5</Value>
     </Setting>
-    <Setting Name="BRANCH_CODE" Type="System.String" Scope="User">
-      <Value Profile="(Default)">SIDC-1-2-1-1</Value>
-    </Setting>
-    <Setting Name="WAREHOUSE" Type="System.String" Scope="User">
-      <Value Profile="(Default)">WHC0003</Value>
-    </Setting>
     <Setting Name="AR_STORED_PROC2" Type="System.String" Scope="User">
       <Value Profile="(Default)">ARStored_5,ARStored_6,ARStored_8</Value>
+    </Setting>
+    <Setting Name="FOR_FINAL_SYNC_FOLDER" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Projecterp\Pallocan\</Value>
+    </Setting>
+    <Setting Name="GENERATION_BY_BATCH" Type="System.String" Scope="User">
+      <Value Profile="(Default)">AR,IP,RC</Value>
     </Setting>
     <Setting Name="DB" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
@@ -54,11 +54,11 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Server=localhost;Database=_pallocan;Username=root;Password=supervisor;</Value>
     </Setting>
-    <Setting Name="FOR_FINAL_SYNC_FOLDER" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Projecterp\Pallocan\</Value>
+    <Setting Name="BRANCH_CODE" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SIDC-1-2-1-1</Value>
     </Setting>
-    <Setting Name="GENERATION_BY_BATCH" Type="System.String" Scope="User">
-      <Value Profile="(Default)">AR,IP,RC</Value>
+    <Setting Name="WAREHOUSE" Type="System.String" Scope="User">
+      <Value Profile="(Default)">WHC0003</Value>
     </Setting>
   </Settings>
 </SettingsFile>
