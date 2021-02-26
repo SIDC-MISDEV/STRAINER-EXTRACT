@@ -85,7 +85,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("GIStored_1_Ref,GIStored_2_Ref,GIStored_4_Ref")]
+        [global::System.Configuration.DefaultSettingValueAttribute("GIStored_1_Ref,GIStored_2_Ref")]
         public string GI_STORED_PROC {
             get {
                 return ((string)(this["GI_STORED_PROC"]));
@@ -97,7 +97,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("GRStored_1_Ref,GRStored_2_Ref,GRStored_4_Ref")]
+        [global::System.Configuration.DefaultSettingValueAttribute("GRStored_1_Ref,GRStored_2_Ref")]
         public string GR_STORED_PROC {
             get {
                 return ((string)(this["GR_STORED_PROC"]));
@@ -133,7 +133,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("RGStored_1_Ref,RGStored_2_Ref,RGStored_4_Ref")]
+        [global::System.Configuration.DefaultSettingValueAttribute("RGStored_1_Ref,RGStored_2_Ref")]
         public string RG_STORED_PROC {
             get {
                 return ((string)(this["RG_STORED_PROC"]));
@@ -145,7 +145,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("RVStored_1_Ref,RVStored_2_Ref,RVStored_4_Ref")]
+        [global::System.Configuration.DefaultSettingValueAttribute("RVStored_1_Ref,RVStored_2_Ref")]
         public string RV_STORED_PROC {
             get {
                 return ((string)(this["RV_STORED_PROC"]));
@@ -157,7 +157,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("IPStored_1,IPStored_2,IPStored_3,IPStored_4,IPStored_5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("IPStored_5")]
         public string IP_STORED_PROC {
             get {
                 return ((string)(this["IP_STORED_PROC"]));
@@ -234,6 +234,42 @@ namespace STRAINER_EXTRACT.Properties {
             }
             set {
                 this["WAREHOUSE"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("AR_IP_MEM_CASH_1,AR_IP_MemStored_3")]
+        public string AR_STORED_PROC3 {
+            get {
+                return ((string)(this["AR_STORED_PROC3"]));
+            }
+            set {
+                this["AR_STORED_PROC3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("AR_IP_NM_CASH_2,AR_IP_NMStored_4")]
+        public string AR_STORED_PROC4 {
+            get {
+                return ((string)(this["AR_STORED_PROC4"]));
+            }
+            set {
+                this["AR_STORED_PROC4"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ARWSStored_1,ARWSStored_2,ARWSStored_4")]
+        public string AR_PAIWI_STORED {
+            get {
+                return ((string)(this["AR_PAIWI_STORED"]));
+            }
+            set {
+                this["AR_PAIWI_STORED"] = value;
             }
         }
     }

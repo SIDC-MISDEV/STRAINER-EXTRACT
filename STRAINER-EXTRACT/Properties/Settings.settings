@@ -18,10 +18,10 @@
       <Value Profile="(Default)">ARStored_1,ARStored_2,ARStored_4</Value>
     </Setting>
     <Setting Name="GI_STORED_PROC" Type="System.String" Scope="User">
-      <Value Profile="(Default)">GIStored_1_Ref,GIStored_2_Ref,GIStored_4_Ref</Value>
+      <Value Profile="(Default)">GIStored_1_Ref,GIStored_2_Ref</Value>
     </Setting>
     <Setting Name="GR_STORED_PROC" Type="System.String" Scope="User">
-      <Value Profile="(Default)">GRStored_1_Ref,GRStored_2_Ref,GRStored_4_Ref</Value>
+      <Value Profile="(Default)">GRStored_1_Ref,GRStored_2_Ref</Value>
     </Setting>
     <Setting Name="PR_STORED_PROC" Type="System.String" Scope="User">
       <Value Profile="(Default)">PRStored_1_Ref, PRStored_2_Ref</Value>
@@ -30,13 +30,13 @@
       <Value Profile="(Default)">RCStored_1,RCStored_2,RCStored_4</Value>
     </Setting>
     <Setting Name="RG_STORED_PROC" Type="System.String" Scope="User">
-      <Value Profile="(Default)">RGStored_1_Ref,RGStored_2_Ref,RGStored_4_Ref</Value>
+      <Value Profile="(Default)">RGStored_1_Ref,RGStored_2_Ref</Value>
     </Setting>
     <Setting Name="RV_STORED_PROC" Type="System.String" Scope="User">
-      <Value Profile="(Default)">RVStored_1_Ref,RVStored_2_Ref,RVStored_4_Ref</Value>
+      <Value Profile="(Default)">RVStored_1_Ref,RVStored_2_Ref</Value>
     </Setting>
     <Setting Name="IP_STORED_PROC" Type="System.String" Scope="User">
-      <Value Profile="(Default)">IPStored_1,IPStored_2,IPStored_3,IPStored_4,IPStored_5</Value>
+      <Value Profile="(Default)">IPStored_5</Value>
     </Setting>
     <Setting Name="AR_STORED_PROC2" Type="System.String" Scope="User">
       <Value Profile="(Default)">ARStored_5,ARStored_6,ARStored_8</Value>
@@ -59,6 +59,15 @@
     </Setting>
     <Setting Name="WAREHOUSE" Type="System.String" Scope="User">
       <Value Profile="(Default)">WHC0003</Value>
+    </Setting>
+    <Setting Name="AR_STORED_PROC3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">AR_IP_MEM_CASH_1,AR_IP_MemStored_3</Value>
+    </Setting>
+    <Setting Name="AR_STORED_PROC4" Type="System.String" Scope="User">
+      <Value Profile="(Default)">AR_IP_NM_CASH_2,AR_IP_NMStored_4</Value>
+    </Setting>
+    <Setting Name="AR_PAIWI_STORED" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ARWSStored_1,ARWSStored_2,ARWSStored_4</Value>
     </Setting>
   </Settings>
 </SettingsFile>

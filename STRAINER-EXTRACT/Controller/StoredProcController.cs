@@ -42,7 +42,10 @@ namespace STRAINER_EXTRACT.Controller
             { "RC", Properties.Settings.Default.RC_STORED_PROC.Split(',') },
             { "RG", Properties.Settings.Default.RG_STORED_PROC.Split(',') },
             { "RV", Properties.Settings.Default.RV_STORED_PROC.Split(',') },
-            { "IP", Properties.Settings.Default.IP_STORED_PROC.Split(',') }
+            { "IP", Properties.Settings.Default.IP_STORED_PROC.Split(',') },
+            { "AR3", Properties.Settings.Default.AR_STORED_PROC3.Split(',') },
+            { "AR4", Properties.Settings.Default.AR_STORED_PROC4.Split(',') },
+            { "WS",  Properties.Settings.Default.AR_PAIWI_STORED.Split(',')}
         };
 
         public static List<string> FolderPath = new List<string>();
@@ -163,14 +166,6 @@ namespace STRAINER_EXTRACT.Controller
 
             }
         }
-
-        private void CompressFiles(string source, string destination)
-        {
-            
-
-            
-        }
-
 
 
         public void GetZip(string dateGen)
@@ -414,50 +409,72 @@ namespace STRAINER_EXTRACT.Controller
                     if (byBatchGeneration.Contains(item.Substring(0, 2)))
                     {
                         //if trans type generation is by batch.
-                        if (item == "IP_SI")
+                        //if (item == "IP_SI")
+                        //{
+                        //    for (int i = 0; i <= scripts.Length - 1; i++)
+                        //    {
+                        //        string querys = string.Empty;
+
+                        //        if (i == 4)
+                        //            break;
+                        //        else
+                        //            querys = $"CALL IPStored_{i + 1}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}')";
+
+
+                        //        db = new MySQLHelper();
+                        //        db.GetExtract(querys);
+
+
+                        //    }
+
+                        //    GetZip(date);
+                        //}
+                        //else if(item == "IP_OR")
+                        //{
+                        //    for (int i = 0; i <= scripts.Length - 1; i++)
+                        //    {
+                        //        string querys = string.Empty;
+
+                        //        if (i == 3)
+                        //        {
+                        //            querys = $"CALL IPStored_{i + 1}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}')";
+                        //            db = new MySQLHelper();
+                        //            db.GetExtract(querys);
+
+                        //        }
+
+                        //    }
+
+                        //    GetZip(date);
+                        //}
+                        
+                        //Paiwi - service type
+                        if(item == "AR_WS")
                         {
-                            for (int i = 0; i <= scripts.Length - 1; i++)
+                            string[] paiwi = storedProcedures["WS"];
+
+                            foreach (var _query in paiwi)
                             {
-                                string querys = string.Empty;
-
-                                if (i == 4)
-                                    break;
-                                else
-                                    querys = $"CALL IPStored_{i + 1}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}')";
-
-
+                                string queryString = string.Empty;
                                 db = new MySQLHelper();
-                                db.GetExtract(querys);
 
+                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating WS - {_query} ... ");
 
+                                queryString = $"CALL {_query}('WS', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+
+                                db.GetExtract(queryString);
+
+                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating WS - {_query} ... ");
                             }
 
                             GetZip(date);
-                        }
-                        else if(item == "IP_OR")
-                        {
-                            for (int i = 0; i <= scripts.Length - 1; i++)
-                            {
-                                string querys = string.Empty;
-
-                                if (i == 3)
-                                {
-                                    querys = $"CALL IPStored_{i + 1}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}')";
-                                    db = new MySQLHelper();
-                                    db.GetExtract(querys);
-
-                                }
-
-                            }
-
-                            GetZip(date);
-                        }
-                        else if(item == "AR_WS")
-                        {
-
                         }
                         else if(item == "AR_SI")
                         {
+                            string[] arIPMM = storedProcedures["AR3"];
+                            string[] arIPNM = storedProcedures["AR4"];
+
+                            #region AR Member
                             foreach (var _query in scripts)
                             {
                                 string queryString = string.Empty;
@@ -478,8 +495,23 @@ namespace STRAINER_EXTRACT.Controller
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
                             }
 
+                            ////*************************************************************************IP -> Member*****************************************************************************
+                            foreach (var qq in arIPMM)
+                            {
+                                db = new MySQLHelper();
+                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {qq} ... ");
+
+                                db.GetExtract($"CALL {qq}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');");
+
+                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {qq} ... ");
+                            }
+                            ////**************************************************************************End IP -> Member*************************************************************************
+                            #endregion
+
+
                             GetZip(date);
 
+                            #region AR Non-Member
                             string[] nonmember = storedProcedures["AR2"];
 
                             foreach (var _query in nonmember)
@@ -496,7 +528,39 @@ namespace STRAINER_EXTRACT.Controller
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
                             }
 
+                            //*************************************************************************IP -> Non-member*****************************************************************************
+                            foreach (var qq in arIPNM)
+                            {
+                                db = new MySQLHelper();
+                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {qq} ... ");
+
+                                db.GetExtract($"CALL {qq}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');");
+
+                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {qq} ... ");
+                            }
+                            //**************************************************************************End IP -> Non-member*************************************************************************
+
+                            #endregion
+
                             GetZip(date);
+
+                            //string[] arIP = storedProcedures["AR3"];
+
+                            //foreach (var _query in arIP)
+                            //{
+                            //    string queryString = string.Empty;
+                            //    db = new MySQLHelper();
+
+                            //    ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {_query} ... ");
+
+                            //    queryString = $"CALL {_query}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+
+                            //    db.GetExtract(queryString);
+
+                            //    ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
+                            //}
+
+
                         }
                         else if (item == "RC_RC")
                         {
@@ -537,7 +601,10 @@ namespace STRAINER_EXTRACT.Controller
 
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {_query} ... ");
 
-                                queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+                                if(item == "IP_OR")
+                                    queryString = $"CALL {_query}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}')";
+                                else
+                                    queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
 
                                 db.GetExtract(queryString);
 

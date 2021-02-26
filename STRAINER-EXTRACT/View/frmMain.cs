@@ -101,7 +101,7 @@ namespace STRAINER_EXTRACT
                         case "IP":
 
                             prefixes = prefix.Where(s => s.ObjectType == "24").Select(f => f.ObjectPrefix).ToList();
-                            prefixes.Add("SI");
+                            //prefixes.Add("SI");
 
                             break;
 
