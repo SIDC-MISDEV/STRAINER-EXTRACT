@@ -453,21 +453,29 @@ namespace STRAINER_EXTRACT.Controller
                         {
                             string[] paiwi = storedProcedures["WS"];
 
-                            foreach (var _query in paiwi)
+                            for (int i = 0; i < reference.Count; i++)
                             {
-                                string queryString = string.Empty;
-                                db = new MySQLHelper();
+                                if (parameter[1] == reference[i].Substring(0, 2))
+                                {
+                                    foreach (var querys in paiwi)
+                                    {
+                                        string queryString = string.Empty;
+                                        db = new MySQLHelper();
 
-                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating WS - {_query} ... ");
+                                        ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating WS - {querys} - {reference[i]} ... ");
 
-                                queryString = $"CALL {_query}('WS', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+                                        queryString = $"CALL {querys} ('WS',  '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{reference[i]}');";
 
-                                db.GetExtract(queryString);
+                                        db.GetExtract(queryString);
 
-                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating WS - {_query} ... ");
+                                        ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating WS - {querys} - {reference[i]} ... ");
+                                    }
+
+                                    GetZip(date);
+                                }
+
+
                             }
-
-                            GetZip(date);
                         }
                         else if(item == "AR_SI")
                         {

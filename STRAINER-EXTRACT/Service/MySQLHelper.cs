@@ -61,7 +61,11 @@ namespace STRAINER_EXTRACT.Service
                     conn.Open();
 
                     query = @"SELECT DISTINCT reference FROM ledger where DATE(date) BETWEEN @dateFrom AND @dateTo
-                        AND LEFT(reference, 2) NOT IN (SELECT prefix FROM serial where objectType IN (13, 24, 14)) ORDER BY reference ASC;";
+                        AND LEFT(reference, 2) NOT IN (SELECT prefix FROM serial where objectType IN (13, 24, 14)) 
+                        UNION ALL
+                        SELECT DISTINCT reference FROM paiwi where DATE(date) BETWEEN @dateFrom AND @dateTo
+                        AND LEFT(reference, 2) = 'WS'  
+                        ORDER BY reference ASC;";
 
                     using (cmd = new MySqlCommand(query, conn))
                     {
