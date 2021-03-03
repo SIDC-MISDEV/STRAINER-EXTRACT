@@ -41,24 +41,8 @@
     <Setting Name="AR_STORED_PROC2" Type="System.String" Scope="User">
       <Value Profile="(Default)">ARStored_5,ARStored_6,ARStored_8</Value>
     </Setting>
-    <Setting Name="FOR_FINAL_SYNC_FOLDER" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Projecterp\Pallocan\</Value>
-    </Setting>
     <Setting Name="GENERATION_BY_BATCH" Type="System.String" Scope="User">
       <Value Profile="(Default)">AR,IP,RC</Value>
-    </Setting>
-    <Setting Name="DB" Type="(Connection string)" Scope="Application">
-      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Server=localhost;Database=_pallocan;Username=root;Password=supervisor;&lt;/ConnectionString&gt;
-&lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Server=localhost;Database=_pallocan;Username=root;Password=supervisor;</Value>
-    </Setting>
-    <Setting Name="BRANCH_CODE" Type="System.String" Scope="User">
-      <Value Profile="(Default)">SIDC-1-2-1-1</Value>
-    </Setting>
-    <Setting Name="WAREHOUSE" Type="System.String" Scope="User">
-      <Value Profile="(Default)">WHC0003</Value>
     </Setting>
     <Setting Name="AR_STORED_PROC3" Type="System.String" Scope="User">
       <Value Profile="(Default)">AR_IP_MEM_CASH_1,AR_IP_MemStored_3</Value>
@@ -68,6 +52,25 @@
     </Setting>
     <Setting Name="AR_PAIWI_STORED" Type="System.String" Scope="User">
       <Value Profile="(Default)">ARWSStored_1,ARWSStored_2,ARWSStored_4</Value>
+    </Setting>
+    <Setting Name="DB" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Server=localhost;Database=_main;Username=root;Password=supervisor;&lt;/ConnectionString&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Server=localhost;Database=_main;Username=root;Password=supervisor;</Value>
+    </Setting>
+    <Setting Name="FOR_FINAL_SYNC_FOLDER" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Projecterp\Main\</Value>
+    </Setting>
+    <Setting Name="BRANCH_CODE" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SIDC-1-2-1-3</Value>
+    </Setting>
+    <Setting Name="WAREHOUSE" Type="System.String" Scope="User">
+      <Value Profile="(Default)">WHC0001</Value>
+    </Setting>
+    <Setting Name="AR_KNP_STORED" Type="System.String" Scope="User">
+      <Value Profile="(Default)">AR_KNP_4</Value>
     </Setting>
   </Settings>
 </SettingsFile>

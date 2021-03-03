@@ -181,18 +181,6 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Projecterp\\Pallocan\\")]
-        public string FOR_FINAL_SYNC_FOLDER {
-            get {
-                return ((string)(this["FOR_FINAL_SYNC_FOLDER"]));
-            }
-            set {
-                this["FOR_FINAL_SYNC_FOLDER"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("AR,IP,RC")]
         public string GENERATION_BY_BATCH {
             get {
@@ -200,40 +188,6 @@ namespace STRAINER_EXTRACT.Properties {
             }
             set {
                 this["GENERATION_BY_BATCH"] = value;
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=localhost;Database=_pallocan;Username=root;Password=supervisor;")]
-        public string DB {
-            get {
-                return ((string)(this["DB"]));
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SIDC-1-2-1-1")]
-        public string BRANCH_CODE {
-            get {
-                return ((string)(this["BRANCH_CODE"]));
-            }
-            set {
-                this["BRANCH_CODE"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("WHC0003")]
-        public string WAREHOUSE {
-            get {
-                return ((string)(this["WAREHOUSE"]));
-            }
-            set {
-                this["WAREHOUSE"] = value;
             }
         }
         
@@ -270,6 +224,64 @@ namespace STRAINER_EXTRACT.Properties {
             }
             set {
                 this["AR_PAIWI_STORED"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=localhost;Database=_main;Username=root;Password=supervisor;")]
+        public string DB {
+            get {
+                return ((string)(this["DB"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Projecterp\\Main\\")]
+        public string FOR_FINAL_SYNC_FOLDER {
+            get {
+                return ((string)(this["FOR_FINAL_SYNC_FOLDER"]));
+            }
+            set {
+                this["FOR_FINAL_SYNC_FOLDER"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("SIDC-1-2-1-3")]
+        public string BRANCH_CODE {
+            get {
+                return ((string)(this["BRANCH_CODE"]));
+            }
+            set {
+                this["BRANCH_CODE"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("WHC0001")]
+        public string WAREHOUSE {
+            get {
+                return ((string)(this["WAREHOUSE"]));
+            }
+            set {
+                this["WAREHOUSE"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("AR_KNP_4")]
+        public string AR_KNP_STORED {
+            get {
+                return ((string)(this["AR_KNP_STORED"]));
+            }
+            set {
+                this["AR_KNP_STORED"] = value;
             }
         }
     }

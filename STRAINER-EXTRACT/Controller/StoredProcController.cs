@@ -45,7 +45,8 @@ namespace STRAINER_EXTRACT.Controller
             { "IP", Properties.Settings.Default.IP_STORED_PROC.Split(',') },
             { "AR3", Properties.Settings.Default.AR_STORED_PROC3.Split(',') },
             { "AR4", Properties.Settings.Default.AR_STORED_PROC4.Split(',') },
-            { "WS",  Properties.Settings.Default.AR_PAIWI_STORED.Split(',')}
+            { "WS",  Properties.Settings.Default.AR_PAIWI_STORED.Split(',')},
+            { "KNP",  Properties.Settings.Default.AR_KNP_STORED.Split(',')}
         };
 
         public static List<string> FolderPath = new List<string>();
@@ -447,9 +448,9 @@ namespace STRAINER_EXTRACT.Controller
 
                         //    GetZip(date);
                         //}
-                        
+
                         //Paiwi - service type
-                        if(item == "AR_WS")
+                        if (item == "AR_WS")
                         {
                             string[] paiwi = storedProcedures["WS"];
 
@@ -477,10 +478,11 @@ namespace STRAINER_EXTRACT.Controller
 
                             }
                         }
-                        else if(item == "AR_SI")
+                        else if (item == "AR_SI")
                         {
                             string[] arIPMM = storedProcedures["AR3"];
                             string[] arIPNM = storedProcedures["AR4"];
+                            string[] arKNP = storedProcedures["KNP"];
 
                             #region AR Member
                             foreach (var _query in scripts)
@@ -496,8 +498,23 @@ namespace STRAINER_EXTRACT.Controller
 
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {_query} ... ");
 
-                                queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+                                if (_query != "ARStored_4")
+                                {
+                                    queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+                                }
+                                else if (_query == "ARStored_4")
+                                {
+                                    foreach (var qKnp in arKNP)
+                                    {
+                                        queryString = $"CALL {qKnp}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
 
+                                    }
+                                }
+
+                                else
+                                {
+                                    break;
+                                }
                                 db.GetExtract(queryString);
 
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
@@ -566,10 +583,54 @@ namespace STRAINER_EXTRACT.Controller
                             //    db.GetExtract(queryString);
 
                             //    ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
-                            //}
 
 
                         }
+                        //}
+                        else if (item == "AR_CI")
+                        {
+
+                            string[] arKNP = storedProcedures["KNP"];
+
+                            
+                            foreach (var _query in scripts)
+                            {
+                                string queryString = string.Empty;
+                                db = new MySQLHelper();
+
+                                //if (parameter[1] != "SI" && _query == "ARStored_5")
+                                //{
+                                //    break;
+
+                                //}
+
+                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {_query} ... ");
+
+                                if (_query != "ARStored_4")
+                                {
+                                    queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+                                }
+                                else if (_query == "ARStored_4")
+                                {
+                                    foreach (var qKnp in arKNP)
+                                    {
+                                        queryString = $"CALL {qKnp}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+
+                                    }
+                                }
+
+                                else
+                                {
+                                    break;
+                                }
+                                db.GetExtract(queryString);
+
+                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
+                            }
+
+                            GetZip(date);
+                        }
+
                         else if (item == "RC_RC")
                         {
                             foreach (var transType in transTypeRC)
@@ -609,7 +670,7 @@ namespace STRAINER_EXTRACT.Controller
 
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {_query} ... ");
 
-                                if(item == "IP_OR")
+                                if (item == "IP_OR")
                                     queryString = $"CALL {_query}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}')";
                                 else
                                     queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
