@@ -19,7 +19,7 @@ namespace STRAINER_EXTRACT
 
         private delegate void SetButtonState(bool enabled);
         BackgroundWorker bg = new BackgroundWorker();
-
+        string batchReference = string.Empty;
 
         public frmMain()
         {
@@ -158,11 +158,33 @@ namespace STRAINER_EXTRACT
         {
             if (!string.IsNullOrEmpty(txtBranchName.Text) && !string.IsNullOrEmpty(txtWarehouseCode.Text))
             {
-                treeView1.Enabled = false;
+                bool generated = false;
 
-                var thread = new Thread(StartGeneration);
-                thread.IsBackground = true;
-                thread.Start();
+                foreach (TreeNode rootNote in treeView1.Nodes)
+                {
+                    foreach (TreeNode childNode in rootNote.Nodes)
+                    {
+                        if (childNode.Checked)
+                        {
+                            generated = true;
+                        }
+                    }
+                }
+
+                if (!generated)
+                {
+                    MessageBox.Show(this, "Unable to generate due to no transaction was checked. Please check any or all transaction type and try again.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                else
+                {
+                    treeView1.Enabled = false;
+
+                    var thread = new Thread(StartGeneration);
+                    thread.IsBackground = true;
+                    thread.Start();
+                }
+                
             }
             else
             {
@@ -219,7 +241,7 @@ namespace STRAINER_EXTRACT
                 controller.ClearFile(Properties.Settings.Default.TEMP_FOLDER);
 
 
-                controller.Extract(forGenerate, dtDate.Value.ToString("yyyy-MM-dd"), rcTransType);
+                controller.Extract(forGenerate, dtDate.Value.ToString("yyyy-MM-dd"), rcTransType, batchReference);
 
                 trVal = $"'{string.Join(",'", trType)}'";
 
@@ -256,6 +278,7 @@ namespace STRAINER_EXTRACT
                 {
                     txtBranchName.Text = details.BranchName;
                     txtWarehouseCode.Text = details.WarehouseCode;
+                    batchReference = details.BranchCodeNumber;
                 }
 
                 Initialize();

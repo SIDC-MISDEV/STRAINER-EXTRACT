@@ -394,7 +394,14 @@ namespace STRAINER_EXTRACT.Controller
             }
         }
 
-        public void Extract(List<string> query, string date, List<string> transTypeRC)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="query">Stored procedure e.g. ARStored_1</param>
+        /// <param name="date">Transaction date e.g. '2020-12-12'</param>
+        /// <param name="transTypeRC">Transtype under RC</param>
+        /// <param name="branchCodeNumber">Branch code number</param>
+        public void Extract(List<string> query, string date, List<string> transTypeRC, string branchCodeNumber)
         {
 
             try
@@ -465,7 +472,7 @@ namespace STRAINER_EXTRACT.Controller
 
                                         ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating WS - {querys} - {reference[i]} ... ");
 
-                                        queryString = $"CALL {querys} ('WS',  '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{reference[i]}');";
+                                        queryString = $"CALL {querys} ('WS',  '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{reference[i]}', '{branchCodeNumber}');";
 
                                         db.GetExtract(queryString);
 
@@ -500,13 +507,13 @@ namespace STRAINER_EXTRACT.Controller
 
                                 if (_query != "ARStored_4")
                                 {
-                                    queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+                                    queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}','{branchCodeNumber}');";
                                 }
                                 else if (_query == "ARStored_4")
                                 {
                                     foreach (var qKnp in arKNP)
                                     {
-                                        queryString = $"CALL {qKnp}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+                                        queryString = $"CALL {qKnp}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}','{branchCodeNumber}');";
 
                                     }
                                 }
@@ -526,7 +533,7 @@ namespace STRAINER_EXTRACT.Controller
                                 db = new MySQLHelper();
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {qq} ... ");
 
-                                db.GetExtract($"CALL {qq}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');");
+                                db.GetExtract($"CALL {qq}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{branchCodeNumber}');");
 
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {qq} ... ");
                             }
@@ -546,7 +553,7 @@ namespace STRAINER_EXTRACT.Controller
 
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {_query} ... ");
 
-                                queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+                                queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{branchCodeNumber}');";
 
                                 db.GetExtract(queryString);
 
@@ -559,7 +566,7 @@ namespace STRAINER_EXTRACT.Controller
                                 db = new MySQLHelper();
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {qq} ... ");
 
-                                db.GetExtract($"CALL {qq}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');");
+                                db.GetExtract($"CALL {qq}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{branchCodeNumber}');");
 
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {qq} ... ");
                             }
@@ -568,25 +575,7 @@ namespace STRAINER_EXTRACT.Controller
                             #endregion
 
                             GetZip(date);
-
-                            //string[] arIP = storedProcedures["AR3"];
-
-                            //foreach (var _query in arIP)
-                            //{
-                            //    string queryString = string.Empty;
-                            //    db = new MySQLHelper();
-
-                            //    ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {_query} ... ");
-
-                            //    queryString = $"CALL {_query}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
-
-                            //    db.GetExtract(queryString);
-
-                            //    ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
-
-
                         }
-                        //}
                         else if (item == "AR_CI")
                         {
 
@@ -598,23 +587,17 @@ namespace STRAINER_EXTRACT.Controller
                                 string queryString = string.Empty;
                                 db = new MySQLHelper();
 
-                                //if (parameter[1] != "SI" && _query == "ARStored_5")
-                                //{
-                                //    break;
-
-                                //}
-
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {_query} ... ");
 
                                 if (_query != "ARStored_4")
                                 {
-                                    queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+                                    queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{branchCodeNumber}');";
                                 }
                                 else if (_query == "ARStored_4")
                                 {
                                     foreach (var qKnp in arKNP)
                                     {
-                                        queryString = $"CALL {qKnp}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+                                        queryString = $"CALL {qKnp}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{branchCodeNumber}');";
 
                                     }
                                 }
@@ -642,7 +625,7 @@ namespace STRAINER_EXTRACT.Controller
 
                                     ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {transType} - {querries} ... ");
 
-                                    queryString = $"CALL {querries}('{transType}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+                                    queryString = $"CALL {querries}('{transType}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{branchCodeNumber}');";
 
                                     db.GetExtract(queryString);
 
@@ -671,9 +654,9 @@ namespace STRAINER_EXTRACT.Controller
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {_query} ... ");
 
                                 if (item == "IP_OR")
-                                    queryString = $"CALL {_query}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}')";
+                                    queryString = $"CALL {_query}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{branchCodeNumber}')";
                                 else
-                                    queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}');";
+                                    queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{branchCodeNumber}');";
 
                                 db.GetExtract(queryString);
 
@@ -697,7 +680,7 @@ namespace STRAINER_EXTRACT.Controller
 
                                     ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {querys} - {reference[i]} ... ");
 
-                                    queryString = $"CALL {querys} ('{parameter[1]}',  '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{reference[i]}');";
+                                    queryString = $"CALL {querys} ('{parameter[1]}',  '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{reference[i]}', '{branchCodeNumber}');";
 
                                     db.GetExtract(queryString);
 

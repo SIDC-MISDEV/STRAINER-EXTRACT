@@ -56,18 +56,18 @@
     <Setting Name="DB" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Server=localhost;Database=_main;Username=root;Password=supervisor;&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;Server=localhost;Database=_pallocan;Username=root;Password=supervisor;&lt;/ConnectionString&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Server=localhost;Database=_main;Username=root;Password=supervisor;</Value>
+      <Value Profile="(Default)">Server=localhost;Database=_pallocan;Username=root;Password=supervisor;</Value>
     </Setting>
     <Setting Name="FOR_FINAL_SYNC_FOLDER" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Projecterp\Main\</Value>
+      <Value Profile="(Default)">C:\Projecterp\pallocan\</Value>
     </Setting>
     <Setting Name="BRANCH_CODE" Type="System.String" Scope="User">
-      <Value Profile="(Default)">SIDC-1-2-1-3</Value>
+      <Value Profile="(Default)">SIDC-1-2-1-1</Value>
     </Setting>
     <Setting Name="WAREHOUSE" Type="System.String" Scope="User">
-      <Value Profile="(Default)">WHC0001</Value>
+      <Value Profile="(Default)">WHC0003</Value>
     </Setting>
     <Setting Name="AR_KNP_STORED" Type="System.String" Scope="User">
       <Value Profile="(Default)">AR_KNP_4</Value>

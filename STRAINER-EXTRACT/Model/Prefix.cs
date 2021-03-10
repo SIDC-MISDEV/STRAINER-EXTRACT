@@ -16,5 +16,6 @@ namespace STRAINER_EXTRACT.Model
     {
         public string BranchName { get; set; }
         public string WarehouseCode { get; set; }
+        public string BranchCodeNumber { get; set; }
     }
 }

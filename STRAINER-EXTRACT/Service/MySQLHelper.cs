@@ -102,7 +102,7 @@ namespace STRAINER_EXTRACT.Service
                 {
                     conn.Open();
 
-                    query = "SELECT branchName, whse FROM business_segments WHERE branchCode = @branch AND whse = @whc";
+                    query = "SELECT branchName, whse, branchCodeNumber FROM business_segments WHERE branchCode = @branch AND whse = @whc";
 
                     using (cmd = new MySqlCommand(query, conn))
                     {
@@ -115,6 +115,7 @@ namespace STRAINER_EXTRACT.Service
                             {
                                 branch.BranchName = dr["branchName"].ToString();
                                 branch.WarehouseCode = dr["whse"].ToString();
+                                branch.BranchCodeNumber = dr["branchCodeNumber"].ToString();
                             }
                         }
                     }
