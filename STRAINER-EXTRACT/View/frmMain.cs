@@ -15,11 +15,14 @@ namespace STRAINER_EXTRACT
 {
     public partial class frmMain : Form
     {
+        List<Prefix> prefix = new List<Prefix>();
         StoredProcController controller = null;
-
         private delegate void SetButtonState(bool enabled);
         BackgroundWorker bg = new BackgroundWorker();
         string batchReference = string.Empty;
+        int autorun = Properties.Settings.Default.AUTO_RUN;
+
+        private delegate void CloseForm();
 
         public frmMain()
         {
@@ -29,6 +32,8 @@ namespace STRAINER_EXTRACT
             this.Text = Application.ProductName;
 
             treeView1.AfterCheck += TreeView1_AfterCheck;
+
+           
         }
 
         private void TreeView1_AfterCheck(object sender, TreeViewEventArgs e)
@@ -60,7 +65,7 @@ namespace STRAINER_EXTRACT
             try
             {
                 var folders = Properties.Settings.Default.FOLDERS.Split(',');
-                var prefix = new List<Prefix>();
+                
 
                 //check all folders are exist
                 controller.InitializeFolders();
@@ -243,16 +248,22 @@ namespace STRAINER_EXTRACT
 
                 controller.Extract(forGenerate, dtDate.Value.ToString("yyyy-MM-dd"), rcTransType, batchReference);
 
-                trVal = $"'{string.Join(",'", trType)}'";
+                //trVal = $"'{string.Join(",'", trType)}'";
 
                 //update transaction ectracted
-                controller.UpdateExtracted(dtDate.Value.ToString("yyyy-MM-dd"), trVal);
+                controller.UpdateExtracted(dtDate.Value.ToString("yyyy-MM-dd"), trType);
 
-                controller.FinalSync();
-                //lblStatus.Text = "";
-                MessageBox.Show("Generation completed!", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                int sentFiles = controller.FinalSync();
                 
+
+                if (autorun == 0)
+                {
+                    MessageBox.Show($"{sentFiles} file(s) successfully generated.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    CloseApp();
+                }
             }
             catch(Exception er)
             {
@@ -266,6 +277,17 @@ namespace STRAINER_EXTRACT
                 ThreadHelper.SetControlState(this, treeView1, true);
 
             }
+        }
+
+        private void CloseApp()
+        {
+            if (this.InvokeRequired)
+            {
+                CloseForm s = new CloseForm(CloseApp);
+                this.Invoke(s, new object[] { });
+            }
+            else
+                this.Close();
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -282,7 +304,25 @@ namespace STRAINER_EXTRACT
                 }
 
                 Initialize();
-               
+
+                if (autorun == 1)
+                {
+                    foreach (TreeNode rootNode in treeView1.Nodes)
+                    {
+                        if (rootNode.Text == "All Transaction Types")
+                        {
+                            foreach (TreeNode rootNodes in treeView1.Nodes)
+                            {
+                                if (rootNodes.Text != "All Transaction Types")
+                                    rootNodes.Checked = true;
+
+                            }
+                        }
+                    }
+
+                    btnGenerate.PerformClick();
+                }
+
             }
             catch (Exception er)
             {

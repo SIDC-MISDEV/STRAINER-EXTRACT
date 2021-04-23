@@ -46,7 +46,8 @@ namespace STRAINER_EXTRACT.Controller
             { "AR3", Properties.Settings.Default.AR_STORED_PROC3.Split(',') },
             { "AR4", Properties.Settings.Default.AR_STORED_PROC4.Split(',') },
             { "WS",  Properties.Settings.Default.AR_PAIWI_STORED.Split(',')},
-            { "KNP",  Properties.Settings.Default.AR_KNP_STORED.Split(',')}
+            { "KNP",  Properties.Settings.Default.AR_KNP_STORED.Split(',')},
+            { "RC_NM", Properties.Settings.Default.RC_STORED_NM.Split(',')}
         };
 
         public static List<string> FolderPath = new List<string>();
@@ -126,16 +127,18 @@ namespace STRAINER_EXTRACT.Controller
             }
         }
 
-        public void FinalSync()
+        public int FinalSync()
         {
             string finalSync = string.Empty;
+            int count = 0;
 
-            foreach (var finalFolders in Directory.GetDirectories(syncFolders))
+            try
             {
-                string[] dropSiteTempSubFolderFiles = Directory.GetFiles(finalFolders, "*.zip");
 
-                try
+                foreach (var finalFolders in Directory.GetDirectories(syncFolders))
                 {
+                    string[] dropSiteTempSubFolderFiles = Directory.GetFiles(finalFolders, "*.zip");
+
                     if (!Directory.Exists(Path.Combine(finalSyncFolders, finalFolders.Split('\\').Last())))
                     {
                         Directory.CreateDirectory(Path.Combine(finalSyncFolders, finalFolders.Split('\\').Last()));
@@ -148,23 +151,17 @@ namespace STRAINER_EXTRACT.Controller
                         string finalFolder = finalSync;
                         string fileZip = finalFile;
 
-                        File.Move(fileZip, Path.Combine(finalSyncFolders, finalFolder,  Path.GetFileName(finalFile)));
-                        //File.Copy(Path.Combine(finalFolders, fileZip), Path.Combine(finalPath, fileZip));
-                    }
+                        File.Move(fileZip, Path.Combine(finalSyncFolders, finalFolder, Path.GetFileName(finalFile)));
 
-                }
-                catch
-                {
-                    throw;
-                }
-                finally
-                {
-                    foreach (var item in dropSiteTempSubFolderFiles)
-                    {
-                        File.Delete(item);
+                        count++;
                     }
                 }
 
+                return count;
+            }
+            catch
+            {
+                throw;
             }
         }
 
@@ -363,7 +360,7 @@ namespace STRAINER_EXTRACT.Controller
             }
         }
 
-        public void UpdateExtracted(string dates, string trtypr)
+        public void UpdateExtracted(string dates, List<string> trtypr)
         {
             try
             {
@@ -509,14 +506,14 @@ namespace STRAINER_EXTRACT.Controller
                                 {
                                     queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}','{branchCodeNumber}');";
                                 }
-                                else if (_query == "ARStored_4")
-                                {
-                                    foreach (var qKnp in arKNP)
-                                    {
-                                        queryString = $"CALL {qKnp}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}','{branchCodeNumber}');";
+                                //else if (_query == "ARStored_4")
+                                //{
+                                //    foreach (var qKnp in arKNP)
+                                //    {
+                                //        queryString = $"CALL {qKnp}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}','{branchCodeNumber}');";
 
-                                    }
-                                }
+                                //    }
+                                //}
 
                                 else
                                 {
@@ -526,6 +523,18 @@ namespace STRAINER_EXTRACT.Controller
 
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
                             }
+
+                            ////*************************************************************************Kanego -> Member*****************************************************************************
+                            foreach (var kng in arKNP)
+                            {
+                                db = new MySQLHelper();
+                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {kng} ... ");
+
+                                db.GetExtract($"CALL {kng}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}','{branchCodeNumber}');");
+
+                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {kng} ... ");
+                            }
+                            ////**************************************************************************End Kanego -> Member*************************************************************************
 
                             ////*************************************************************************IP -> Member*****************************************************************************
                             foreach (var qq in arIPMM)
@@ -560,6 +569,9 @@ namespace STRAINER_EXTRACT.Controller
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
                             }
 
+                           
+                            ////**************************************************************************End Kanego -> Non Member*************************************************************************
+
                             //*************************************************************************IP -> Non-member*****************************************************************************
                             foreach (var qq in arIPNM)
                             {
@@ -593,14 +605,14 @@ namespace STRAINER_EXTRACT.Controller
                                 {
                                     queryString = $"CALL {_query}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{branchCodeNumber}');";
                                 }
-                                else if (_query == "ARStored_4")
-                                {
-                                    foreach (var qKnp in arKNP)
-                                    {
-                                        queryString = $"CALL {qKnp}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{branchCodeNumber}');";
+                                //else if (_query == "ARStored_4")
+                                //{
+                                //    foreach (var qKnp in arKNP)
+                                //    {
+                                //        queryString = $"CALL {qKnp}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{branchCodeNumber}');";
 
-                                    }
-                                }
+                                //    }
+                                //}
 
                                 else
                                 {
@@ -611,6 +623,18 @@ namespace STRAINER_EXTRACT.Controller
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
                             }
 
+                            ////*************************************************************************Kanego -> Member*****************************************************************************
+                            foreach (var kng in arKNP)
+                            {
+                                db = new MySQLHelper();
+                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {kng} ... ");
+
+                                db.GetExtract($"CALL {kng}('{parameter[1]}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}','{branchCodeNumber}');");
+
+                                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {kng} ... ");
+                            }
+                            ////**************************************************************************End Kanego -> Member*************************************************************************
+
                             GetZip(date);
                         }
 
@@ -618,23 +642,65 @@ namespace STRAINER_EXTRACT.Controller
                         {
                             foreach (var transType in transTypeRC)
                             {
+                                //foreach (var querries in scripts)
+                                //{
+                                //    string queryString = string.Empty;
+                                //    db = new MySQLHelper();
+
+                                //    ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {transType} - {querries} ... ");
+
+                                //    queryString = $"CALL {querries}('{transType}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{branchCodeNumber}');";
+
+                                //    db.GetExtract(queryString);
+
+                                //    ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {transType} - {querries} ... ");
+
+
+                                //}
+
+                                //GetZip(date);
+
+                                #region Member
+
                                 foreach (var querries in scripts)
                                 {
                                     string queryString = string.Empty;
                                     db = new MySQLHelper();
 
-                                    ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {transType} - {querries} ... ");
+                                    ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {querries} ... ");
 
                                     queryString = $"CALL {querries}('{transType}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{branchCodeNumber}');";
 
                                     db.GetExtract(queryString);
 
-                                    ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {transType} - {querries} ... ");
+                                    ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {querries} ... ");
 
 
                                 }
 
                                 GetZip(date);
+                                #endregion
+
+                                #region Non-Member
+                                string[] rcNM = storedProcedures["RC_NM"];
+                                foreach (var querries in rcNM)
+                                {
+                                    string queryString = string.Empty;
+                                    db = new MySQLHelper();
+
+                                    ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {querries} ... ");
+
+                                    queryString = $"CALL {querries}('{transType}', '{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{branchCodeNumber}');";
+
+                                    db.GetExtract(queryString);
+
+                                    ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {querries} ... ");
+
+
+                                }
+
+                                GetZip(date);
+                                #endregion
                             }
 
                         }

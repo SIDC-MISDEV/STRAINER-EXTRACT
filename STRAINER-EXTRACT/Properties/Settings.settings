@@ -15,7 +15,7 @@
       <Value Profile="(Default)">C:\TestPath\</Value>
     </Setting>
     <Setting Name="AR_STORED_PROC" Type="System.String" Scope="User">
-      <Value Profile="(Default)">ARStored_1,ARStored_2,ARStored_4</Value>
+      <Value Profile="(Default)">ARStored_1,ARStored_2</Value>
     </Setting>
     <Setting Name="GI_STORED_PROC" Type="System.String" Scope="User">
       <Value Profile="(Default)">GIStored_1_Ref,GIStored_2_Ref</Value>
@@ -27,7 +27,7 @@
       <Value Profile="(Default)">PRStored_1_Ref, PRStored_2_Ref</Value>
     </Setting>
     <Setting Name="RC_STORED_PROC" Type="System.String" Scope="User">
-      <Value Profile="(Default)">RCStored_1,RCStored_2,RCStored_4</Value>
+      <Value Profile="(Default)">RCStored_1,RCStored_2</Value>
     </Setting>
     <Setting Name="RG_STORED_PROC" Type="System.String" Scope="User">
       <Value Profile="(Default)">RGStored_1_Ref,RGStored_2_Ref</Value>
@@ -39,16 +39,16 @@
       <Value Profile="(Default)">IPStored_5</Value>
     </Setting>
     <Setting Name="AR_STORED_PROC2" Type="System.String" Scope="User">
-      <Value Profile="(Default)">ARStored_5,ARStored_6,ARStored_8</Value>
+      <Value Profile="(Default)">ARStored_5,ARStored_6</Value>
     </Setting>
     <Setting Name="GENERATION_BY_BATCH" Type="System.String" Scope="User">
-      <Value Profile="(Default)">AR,IP,RC</Value>
+      <Value Profile="(Default)">AR,RC</Value>
     </Setting>
     <Setting Name="AR_STORED_PROC3" Type="System.String" Scope="User">
-      <Value Profile="(Default)">AR_IP_MEM_CASH_1,AR_IP_MemStored_3</Value>
+      <Value Profile="(Default)">AR_IP_MEM_CASH_1</Value>
     </Setting>
     <Setting Name="AR_STORED_PROC4" Type="System.String" Scope="User">
-      <Value Profile="(Default)">AR_IP_NM_CASH_2,AR_IP_NMStored_4</Value>
+      <Value Profile="(Default)">AR_IP_NM_CASH_2</Value>
     </Setting>
     <Setting Name="AR_PAIWI_STORED" Type="System.String" Scope="User">
       <Value Profile="(Default)">ARWSStored_1,ARWSStored_2,ARWSStored_4</Value>
@@ -56,21 +56,27 @@
     <Setting Name="DB" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Server=localhost;Database=_pallocan;Username=root;Password=supervisor;&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;Server=localhost;Database=_rosario_test;Username=root;Password=supervisor;&lt;/ConnectionString&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Server=localhost;Database=_pallocan;Username=root;Password=supervisor;</Value>
+      <Value Profile="(Default)">Server=localhost;Database=_rosario_test;Username=root;Password=supervisor;</Value>
     </Setting>
     <Setting Name="FOR_FINAL_SYNC_FOLDER" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Projecterp\pallocan\</Value>
+      <Value Profile="(Default)">C:\Projecterp\rosario\</Value>
     </Setting>
     <Setting Name="BRANCH_CODE" Type="System.String" Scope="User">
-      <Value Profile="(Default)">SIDC-1-2-1-1</Value>
+      <Value Profile="(Default)">SIDC-1-2-1-4</Value>
     </Setting>
     <Setting Name="WAREHOUSE" Type="System.String" Scope="User">
-      <Value Profile="(Default)">WHC0003</Value>
+      <Value Profile="(Default)">WHC0006</Value>
     </Setting>
     <Setting Name="AR_KNP_STORED" Type="System.String" Scope="User">
       <Value Profile="(Default)">AR_KNP_4</Value>
+    </Setting>
+    <Setting Name="RC_STORED_NM" Type="System.String" Scope="User">
+      <Value Profile="(Default)">RCStored_NM_1,RCStored_NM_2</Value>
+    </Setting>
+    <Setting Name="AUTO_RUN" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

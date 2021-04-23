@@ -14,12 +14,23 @@ namespace STRAINER_EXTRACT.Service
 
         private MySqlConnection conn;
         private MySqlCommand cmd;
-        private MySqlTransaction trans;
        
         private string connectionString = Properties.Settings.Default.DB;
         private string branchName = Properties.Settings.Default.BRANCH_CODE;
         private string warehouseCode = Properties.Settings.Default.WAREHOUSE;
         private string query = string.Empty;
+
+        private Dictionary<string, int> transactions = new Dictionary<string, int>()
+        {
+            { "AR", 13 },
+            { "GI", 60 },
+            { "GR", 59 },
+            { "IP", 24 },
+            { "PR", 22 },
+            { "RC", 14 },
+            { "RG", 21 },
+            { "RV", 20 }
+        };
 
         public void GetExtract(string _query)
         {
@@ -55,13 +66,23 @@ namespace STRAINER_EXTRACT.Service
             try
             {
                 List<string> val = new List<string>();
+                List<string> parameter = new List<string>();
+
+                var excluded = Properties.Settings.Default.GENERATION_BY_BATCH;
+
+                foreach (var item in excluded.Split(','))
+                {
+                    parameter.Add(transactions[item].ToString());
+                }
 
                 using (conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
 
+                    var prm = string.Join(",", parameter);
+
                     query = @"SELECT DISTINCT reference FROM ledger where DATE(date) BETWEEN @dateFrom AND @dateTo
-                        AND LEFT(reference, 2) NOT IN (SELECT prefix FROM serial where objectType IN (13, 24, 14)) 
+                        AND LEFT(reference, 2) NOT IN (SELECT prefix FROM serial where objectType IN (@trans)) 
                         UNION ALL
                         SELECT DISTINCT reference FROM paiwi where DATE(date) BETWEEN @dateFrom AND @dateTo
                         AND LEFT(reference, 2) = 'WS'  
@@ -71,7 +92,7 @@ namespace STRAINER_EXTRACT.Service
                     {
                         cmd.Parameters.AddWithValue("@dateFrom", dateFrom);
                         cmd.Parameters.AddWithValue("@dateTo", dateTo);
-
+                        cmd.Parameters.AddWithValue("@trans", prm);
                         using (var dr = cmd.ExecuteReader())
                         {
                             while (dr.Read())
@@ -167,9 +188,10 @@ namespace STRAINER_EXTRACT.Service
             }
         }
 
-        public void UpdateExtracted(string dates, string trType)
+        public void UpdateExtracted(string dates, List<string> trType)
         {
-
+            StringBuilder sb = new StringBuilder();
+            string transType = $"'{string.Join("','", trType)}'";
 
             try
             {
@@ -178,21 +200,29 @@ namespace STRAINER_EXTRACT.Service
                 using (conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    trans = conn.BeginTransaction(IsolationLevel.ReadCommitted);
 
-                    query = @"update invoice i set i.extracted='Y' where i.extracted ='N' and left(i.reference,2) IN
-                     (@trtype) and date(i.date)=@dates and
-                     not i.cancelled and  i.quantity<>'0';
-                     update ledger l set l.extracted='Y' where l.extracted='N' and left(l.reference,2) in ('SI','OR') and  date(l.date)=@dates ;
-                     update transactionpayments a set a.extracted='Y' where a.extracted='N' and left(a.reference,2) in ('SI','OR') and  date(a.date)=@dates ;";
+                    //query = @"update invoice i set i.extracted='Y' where i.extracted ='N' and left(i.reference,2) IN
+                    // (@trtype) and date(i.date)=@dates and
+                    // not i.cancelled and  i.quantity<>'0';
+                    // update ledger l set l.extracted='Y' where l.extracted='N' and left(l.reference,2) in ('SI','OR') and  date(l.date)=@dates ;
+                    // update transactionpayments a set a.extracted='Y' where a.extracted='N' and left(a.reference,2) in ('SI','OR') and  date(a.date)=@dates ;";
 
-                    using (cmd = new MySqlCommand(query, conn))
+                    //sb.Append(@"UPDATE ledger SET extracted = 'Y' WHERE LEFT(reference, 2) IN (@trtype) AND DATE(date) = @dates;
+                    //            UPDATE invoice SET extracted = 'Y' WHERE LEFT(reference, 2) IN(@trtype) AND DATE(date) = @dates; 
+                    //            UPDATE paiwi SET extracted = 'Y' WHERE LEFT(reference, 2) = 'WS' AND DATE(date) = @dates;");
+
+                    sb.Append($@"UPDATE ledger SET extracted = 'Y' WHERE LEFT(reference, 2) IN ({transType}) AND DATE(date) = '{dates}';
+                                UPDATE invoice SET extracted = 'Y' WHERE LEFT(reference, 2) IN ({transType}) AND DATE(date) = '{dates}'; 
+                                UPDATE paiwi SET extracted = 'Y' WHERE LEFT(reference, 2) = 'WS' AND DATE(date) = '{dates}'");
+
+                    using (cmd = new MySqlCommand(sb.ToString(), conn))
                     {
                         cmd.CommandTimeout = 0;
-                        cmd.Parameters.AddWithValue("@dates", dates);
-                        cmd.Parameters.AddWithValue("@trtype", trType);
-                        cmd.ExecuteNonQuery();
-                        trans.Commit();
+                        //cmd.Parameters.AddWithValue("@trtype", transType);
+                        //cmd.Parameters.AddWithValue("@dates", dates);
+
+                        int result = cmd.ExecuteNonQuery();
+
                     }
 
                 }
@@ -201,7 +231,6 @@ namespace STRAINER_EXTRACT.Service
             }
             catch
             {
-                trans.Rollback();
                 throw;
             }
         }
