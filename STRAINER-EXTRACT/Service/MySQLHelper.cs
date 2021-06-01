@@ -82,10 +82,10 @@ namespace STRAINER_EXTRACT.Service
                     var prm = string.Join(",", parameter);
 
                     query = @"SELECT DISTINCT reference FROM ledger where DATE(date) BETWEEN @dateFrom AND @dateTo
-                        AND LEFT(reference, 2) NOT IN (SELECT prefix FROM serial where objectType IN (@trans)) 
+                        AND LEFT(reference, 2) NOT IN (SELECT prefix FROM serial where objectType IN (@trans)) AND extracted = 'N'
                         UNION ALL
-                        SELECT DISTINCT reference FROM paiwi where DATE(date) BETWEEN @dateFrom AND @dateTo
-                        AND LEFT(reference, 2) = 'WS'  
+                        SELECT DISTINCT reference FROM paiwi where (DATE(date) BETWEEN @dateFrom AND @dateTo)
+                        AND LEFT(reference, 2) = 'WS'  AND extracted = 'N' 
                         ORDER BY reference ASC;";
 
                     using (cmd = new MySqlCommand(query, conn))
