@@ -360,12 +360,28 @@ namespace STRAINER_EXTRACT.Controller
             }
         }
 
+        public bool IsFileGenerated()
+        {
+            try
+            {
+                int fileCount = Directory.GetFiles(syncFolders, "*.zip", SearchOption.AllDirectories).Count();
+
+                return fileCount > 0 ? true : false;
+            }
+            catch
+            {
+
+                throw;
+            }
+        }
+
         public void UpdateExtracted(string dates, List<string> trtypr)
         {
             try
             {
                 db = new MySQLHelper();
 
+                ThreadHelper.SetLabel(frm, frm.lblStatus, $"Updating extracted to Y...");
                 db.UpdateExtracted(dates, trtypr);
 
             }
