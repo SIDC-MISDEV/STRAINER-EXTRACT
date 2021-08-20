@@ -12,7 +12,7 @@
       <Value Profile="(Default)">C:\TempPath\</Value>
     </Setting>
     <Setting Name="DROPSITE_FOLDER" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\TestPath\</Value>
+      <Value Profile="(Default)">C:\Projecterp\</Value>
     </Setting>
     <Setting Name="AR_STORED_PROC" Type="System.String" Scope="User">
       <Value Profile="(Default)">ARStored_1,ARStored_2</Value>
@@ -56,18 +56,18 @@
     <Setting Name="DB" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Server=localhost;Database=_rosario_test;Username=root;Password=supervisor;&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;Server=localhost;Database=_sofos;Username=root;Password=supervisor;&lt;/ConnectionString&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Server=localhost;Database=_rosario_test;Username=root;Password=supervisor;</Value>
+      <Value Profile="(Default)">Server=localhost;Database=_sofos;Username=root;Password=supervisor;</Value>
     </Setting>
     <Setting Name="FOR_FINAL_SYNC_FOLDER" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Projecterp\rosario\</Value>
+      <Value Profile="(Default)">C:\SAPHana\gloria\</Value>
     </Setting>
     <Setting Name="BRANCH_CODE" Type="System.String" Scope="User">
-      <Value Profile="(Default)">SIDC-1-2-1-4</Value>
+      <Value Profile="(Default)">SIDC-2-2-1-13</Value>
     </Setting>
     <Setting Name="WAREHOUSE" Type="System.String" Scope="User">
-      <Value Profile="(Default)">WHC0006</Value>
+      <Value Profile="(Default)">WHM0021</Value>
     </Setting>
     <Setting Name="AR_KNP_STORED" Type="System.String" Scope="User">
       <Value Profile="(Default)">AR_KNP_4</Value>

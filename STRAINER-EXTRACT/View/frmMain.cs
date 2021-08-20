@@ -248,10 +248,14 @@ namespace STRAINER_EXTRACT
 
                 controller.Extract(forGenerate, dtDate.Value.ToString("yyyy-MM-dd"), rcTransType, batchReference);
 
-                //trVal = $"'{string.Join(",'", trType)}'";
 
-                //update transaction ectracted
-                controller.UpdateExtracted(dtDate.Value.ToString("yyyy-MM-dd"), trType);
+                if (controller.IsFileGenerated())
+                {
+                    //update transaction ectracted
+                    controller.UpdateExtracted(dtDate.Value.ToString("yyyy-MM-dd"), trType);
+                }
+
+                ThreadHelper.SetLabel(this, lblStatus, $"Generation completed.");
 
                 int sentFiles = controller.FinalSync();
                 
