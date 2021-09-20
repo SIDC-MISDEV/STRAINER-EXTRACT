@@ -230,7 +230,7 @@ namespace STRAINER_EXTRACT.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=localhost;Database=_sofos;Username=root;Password=supervisor;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=localhost;Database=_pallocan;Username=root;Password=supervisor;")]
         public string DB {
             get {
                 return ((string)(this["DB"]));
@@ -251,7 +251,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SIDC-2-2-1-13")]
+        [global::System.Configuration.DefaultSettingValueAttribute("SIDC-1-2-1-1")]
         public string BRANCH_CODE {
             get {
                 return ((string)(this["BRANCH_CODE"]));
@@ -263,7 +263,7 @@ namespace STRAINER_EXTRACT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("WHM0021")]
+        [global::System.Configuration.DefaultSettingValueAttribute("WHC0003")]
         public string WAREHOUSE {
             get {
                 return ((string)(this["WAREHOUSE"]));
