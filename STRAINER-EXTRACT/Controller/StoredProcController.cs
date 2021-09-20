@@ -498,7 +498,7 @@ namespace STRAINER_EXTRACT.Controller
 
                             }
                         }
-                        else if (item == "AR_SI")
+                        else if (item == "AR_SI" || item == "AR_OL")
                         {
                             string[] arIPMM = storedProcedures["AR3"];
                             string[] arIPNM = storedProcedures["AR4"];
@@ -558,7 +558,7 @@ namespace STRAINER_EXTRACT.Controller
                                 db = new MySQLHelper();
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {qq} ... ");
 
-                                db.GetExtract($"CALL {qq}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{branchCodeNumber}');");
+                                db.GetExtract($"CALL {qq}('{parameter[1]}','{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{branchCodeNumber}');");
 
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {qq} ... ");
                             }
@@ -585,7 +585,7 @@ namespace STRAINER_EXTRACT.Controller
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {_query} ... ");
                             }
 
-                           
+
                             ////**************************************************************************End Kanego -> Non Member*************************************************************************
 
                             //*************************************************************************IP -> Non-member*****************************************************************************
@@ -594,7 +594,7 @@ namespace STRAINER_EXTRACT.Controller
                                 db = new MySQLHelper();
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Start generating {parameter[1]} - {qq} ... ");
 
-                                db.GetExtract($"CALL {qq}('{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{branchCodeNumber}');");
+                                db.GetExtract($"CALL {qq}('{parameter[1]}','{date}', '{Properties.Settings.Default.BRANCH_CODE}', '{Properties.Settings.Default.WAREHOUSE}', '{branchCodeNumber}');");
 
                                 ThreadHelper.SetLabel(frm, frm.lblStatus, $"Finished generating {parameter[1]} - {qq} ... ");
                             }
@@ -604,7 +604,7 @@ namespace STRAINER_EXTRACT.Controller
 
                             GetZip(date);
                         }
-                        else if (item == "AR_CI")
+                        else if (item == "AR_CI" || item == "AR_CE")
                         {
 
                             string[] arKNP = storedProcedures["KNP"];
